@@ -22,7 +22,7 @@ class User{
 function create(){
  
     // insert query
-    $sql = "INSERT INTO " . $this->table_name . "SET firstname = ?, lastname = ?, email = ?, password = ?";
+    $sql = "INSERT INTO ".$this->table_name." SET firstname=?, lastname=?, email=?, password=?";
  
     // prepare the query
     $stmt = $this->conn->stmt_init(); 
