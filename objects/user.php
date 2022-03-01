@@ -38,7 +38,7 @@ function create(){
     $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
 
     // bind the values
-    $stmt -> bind_param('s',$this->firstname,$this->lastname,$this->email,$password_hash); 
+    $stmt -> bind_param('ssss',$this->firstname,$this->lastname,$this->email,$password_hash); 
  
     // execute the query, also check if query was successful
     if($stmt->execute()){
