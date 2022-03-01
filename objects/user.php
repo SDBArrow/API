@@ -24,20 +24,20 @@ function create(){
     // insert query
     $sql = "INSERT INTO ".$this->table_name." SET firstname=?, lastname=?, email=?, password=?";
  
-    // prepare the query
+    // 初始化stat 防sql injection
     $stmt = $this->conn->stmt_init(); 
     $stmt -> prepare($sql); 
  
-    // sanitize
+    // 消毒  strip_tags可不做 htmlspecialchars一定要做。 strip_tags：去掉 HTML 及 PHP 的標記 ; htmlspecialchars，將特殊字元轉成 HTML 格式
     $this->firstname=htmlspecialchars(strip_tags($this->firstname));
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
     $this->email=htmlspecialchars(strip_tags($this->email));
     $this->password=htmlspecialchars(strip_tags($this->password));
  
-    // hash the password before saving to database
+    // 密碼加密
     $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
 
-    // bind the values
+    // 帶入參數
     $stmt -> bind_param('ssss',$this->firstname,$this->lastname,$this->email,$password_hash); 
  
     // execute the query, also check if query was successful
