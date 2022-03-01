@@ -22,7 +22,7 @@ class User{
 function create(){
  
     // insert query
-    $query = "INSERT INTO " . $this->table_name . "
+    $sql = "INSERT INTO " . $this->table_name . "
             SET
                 firstname = :firstname,
                 lastname = :lastname,
@@ -30,7 +30,8 @@ function create(){
                 password = :password";
  
     // prepare the query
-    $stmt = $this->conn->prepare($query);
+    $stmt = $this->conn->stmt_init(); 
+    $stmt -> prepare($sql); 
  
     // sanitize
     $this->firstname=htmlspecialchars(strip_tags($this->firstname));
