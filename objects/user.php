@@ -24,10 +24,10 @@ function create(){
     // insert query
     $query = "INSERT INTO " . $this->table_name . "
             SET
-                firstname = :firstname,
-                lastname = :lastname,
-                email = :email,
-                password = :password";
+                firstname = " . $this->firstname . ",
+                lastname = " . $this->lastname . ",
+                email = " . $this->email . ",
+                password = " . $this->password . "";
  
     // prepare the query
     $stmt = $this->conn->prepare($query);
