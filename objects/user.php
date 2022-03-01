@@ -22,7 +22,7 @@ class User{
 function create(){
  
     // insert query
-    $sql = "INSERT INTO " . $this->table_name . "SET firstname = :firstname, lastname = :lastname, email = :email, password = :password";
+    $sql = "INSERT INTO " . $this->table_name . "SET firstname = ?, lastname = ?, email = ?, password = ?";
  
     // prepare the query
     $stmt = $this->conn->stmt_init(); 
@@ -34,14 +34,11 @@ function create(){
     $this->email=htmlspecialchars(strip_tags($this->email));
     $this->password=htmlspecialchars(strip_tags($this->password));
  
-    // bind the values
-    $stmt->bindParam(':firstname', $this->firstname);
-    $stmt->bindParam(':lastname', $this->lastname);
-    $stmt->bindParam(':email', $this->email);
- 
     // hash the password before saving to database
     $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-    $stmt->bindParam(':password', $password_hash);
+
+    // bind the values
+    $stmt -> bind_param('s',$this->firstname,$this->lastname,$this->email,$password_hash); 
  
     // execute the query, also check if query was successful
     if($stmt->execute()){
