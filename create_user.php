@@ -30,7 +30,8 @@ $user->password = $data->password;
 if(
     !empty($user->firstname) &&
     !empty($user->email) &&
-    !empty($user->password) 
+    !empty($user->password) &&
+    $user->create()
 ){
  
     // set response code
