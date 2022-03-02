@@ -24,7 +24,7 @@ $data = json_decode(file_get_contents("php://input"));
 $user->email = $data->email;
 $email_exists = $user->emailExists();
  
-// generate json web token
+// 引入生成 json web token 的library
 include_once 'config/core.php';
 include_once 'libs/php-jwt-main/src/BeforeValidException.php';
 include_once 'libs/php-jwt-main/src/ExpiredException.php';
