@@ -5,6 +5,7 @@ include_once 'libs/php-jwt-main/src/BeforeValidException.php';
 include_once 'libs/php-jwt-main/src/ExpiredException.php';
 include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
+include_once 'libs/php-jwt-main/src/Key.php';
 
 use \Firebase\JWT\JWT;
 use Firebase\JWT\Key;
