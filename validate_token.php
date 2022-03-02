@@ -35,7 +35,7 @@ if ($jwt) {
         // show user details
         echo json_encode(array(
             "message" => "Access granted.",
-
+            "data" => $decoded->data
         ));
     }
 
