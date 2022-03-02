@@ -25,10 +25,9 @@ function create(){
     $sql = "INSERT INTO ".$this->table_name." SET firstname=?, lastname=?, email=?, password=?";
  
     // 初始化stat 防sql injection
-    $stmt = $this->conn->stmt_init(); 
-    $stmt -> prepare($sql); 
+    $stmt = $this->conn->stmt_init()->prepare($sql); 
  
-    // 消毒  strip_tags可不做 htmlspecialchars一定要做。 strip_tags：去掉 HTML 及 PHP 的標記 ; htmlspecialchars，將特殊字元轉成 HTML 格式
+    // 消毒  strip_tags可不做 htmlspecialchars一定要做。 strip_tags：去掉 HTML 及 PHP 的標籤(html語法) ; htmlspecialchars，將特殊字元轉成 HTML 格式 防止http連接攻擊
     $this->firstname=htmlspecialchars(strip_tags($this->firstname));
     $this->lastname=htmlspecialchars(strip_tags($this->lastname));
     $this->email=htmlspecialchars(strip_tags($this->email));
@@ -48,5 +47,41 @@ function create(){
     return false;
 }
  
-// emailExists() method will be here
+// check if given email exist in the database
+function emailExists(){
+ 
+    // query to check if email exists
+    $sql = "SELECT id, firstname, lastname, password FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
+ 
+    // 初始化stat 防sql injection
+    $stmt = $this->conn->stmt_init()->prepare($sql);
+ 
+    // 消毒 
+    $this->email=htmlspecialchars(strip_tags($this->email));
+ 
+    // 帶入參數
+    $stmt->bindParam('s', $this->email);
+ 
+    // execute the query
+    $stmt->execute();
+ 
+    // 返回查詢的資料數
+    $num = $stmt->rowCount();
+ 
+    // if email exists, assign values to object properties for easy access and use for php sessions
+    if($num>0){
+ 
+        // get record details / values
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+ 
+        // assign values to object properties
+        $this->id = $row['id'];
+        $this->firstname = $row['firstname'];
+        $this->lastname = $row['lastname'];
+        $this->password = $row['password'];
+        return true;
+    }
+    return false;
+}
+// update() method will be here
 }
