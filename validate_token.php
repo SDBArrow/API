@@ -26,10 +26,21 @@ $jwt = isset($data->jwt) ? $data->jwt : "";
 if ($jwt) {
     // if decode succeed, show user details
     try {
-        echo json_encode(array("message" => "try"));
         // decode jwt
-        $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-        echo json_encode(array("message" => "try"));
+        try {
+            $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        } catch (Exception $e) {
+
+            // set response code
+            http_response_code(401);
+
+            // tell the user access denied  & show error message
+            echo json_encode(array(
+                "message" => "Access denied.",
+                "error" => $e->getMessage()
+            ));
+        }
+
         // set response code
         http_response_code(200);
 
@@ -52,12 +63,12 @@ if ($jwt) {
             "error" => $e->getMessage()
         ));
     }
-}// show error message if jwt is empty
-else{
- 
+} // show error message if jwt is empty
+else {
+
     // set response code
     http_response_code(401);
- 
+
     // tell the user access denied
     echo json_encode(array("message" => "Access denied."));
 }
