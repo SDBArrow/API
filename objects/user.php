@@ -52,7 +52,7 @@ function create(){
 function emailExists(){
  
     // query to check if email exists
-    $sql = "SELECT id, firstname, lastname, password FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
+    $sql = "SELECT id, firstname, lastname, password FROM ".$this->table_name." WHERE email=? LIMIT 0,1";
  
     // 初始化stat 防sql injection
     $stmt = $this->conn->stmt_init();
@@ -60,12 +60,16 @@ function emailExists(){
  
     // 消毒 
     $this->email=htmlspecialchars(strip_tags($this->email));
-    
+
     // 帶入參數
     $stmt-> bind_param('s', $this->email);
  
     // execute the query
-    $stmt->execute();
+    if($stmt->execute()){
+        echo "aa";
+    }else{
+        echo "bb";
+    }
  
     // 返回查詢的資料數
     $num = $stmt->num_rows();
