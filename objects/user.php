@@ -82,40 +82,30 @@ class User
     public function update()
     {
 
-        // if password needs to be updated
-        $password_set = !empty($this->password) ? ", password = :password" : "";
+        // 判斷密碼是否需要被更新
+        $password_set = !empty($this->password) ? ", password = ?" : "";
 
-        // if no posted password, do not update the password
-        $query = "UPDATE " . $this->table_name . "
-            SET
-                firstname = :firstname,
-                lastname = :lastname,
-                email = :email
-                {$password_set}
-            WHERE id = :id";
+        // 更新資料
+        $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =?, email =? ".$password_set."WHERE id =?";
 
-        // prepare the query
-        $stmt = $this->conn->prepare($query);
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
 
         // sanitize
         $this->firstname = htmlspecialchars(strip_tags($this->firstname));
         $this->lastname = htmlspecialchars(strip_tags($this->lastname));
         $this->email = htmlspecialchars(strip_tags($this->email));
 
-        // bind the values from the form
-        $stmt->bindParam(':firstname', $this->firstname);
-        $stmt->bindParam(':lastname', $this->lastname);
-        $stmt->bindParam(':email', $this->email);
-
-        // hash the password before saving to database
+        // 加密密碼，並帶入值
         if (!empty($this->password)) {
             $this->password = htmlspecialchars(strip_tags($this->password));
             $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-            $stmt->bindParam(':password', $password_hash);
+            $stmt->bind_param('sssss', $this->firstname, $this->lastname, $this->email, $password_hash, $this->id);
+        }else{
+            // unique ID of record to be edited
+            $stmt->bind_param('ssss', $this->firstname, $this->lastname, $this->email, $this->id);
         }
-
-        // unique ID of record to be edited
-        $stmt->bindParam(':id', $this->id);
 
         // execute the query
         if ($stmt->execute()) {
