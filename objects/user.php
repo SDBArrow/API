@@ -25,7 +25,8 @@ function create(){
     $sql = "INSERT INTO ".$this->table_name." SET firstname=?, lastname=?, email=?, password=?";
  
     // 初始化stat 防sql injection
-    $stmt = $this->conn->stmt_init()->prepare($sql); 
+    $stmt = $this->conn->stmt_init();
+    $stmt->prepare($sql); 
  
     // 消毒  strip_tags可不做 htmlspecialchars一定要做。 strip_tags：去掉 HTML 及 PHP 的標籤(html語法) ; htmlspecialchars，將特殊字元轉成 HTML 格式 防止http連接攻擊
     $this->firstname=htmlspecialchars(strip_tags($this->firstname));
@@ -54,7 +55,8 @@ function emailExists(){
     $sql = "SELECT id, firstname, lastname, password FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
  
     // 初始化stat 防sql injection
-    $stmt = $this->conn->stmt_init()->prepare($sql);
+    $stmt = $this->conn->stmt_init();
+    $stmt->prepare($sql); 
  
     // 消毒 
     $this->email=htmlspecialchars(strip_tags($this->email));
