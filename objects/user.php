@@ -60,7 +60,7 @@ function emailExists(){
  
     // 消毒 
     $this->email=htmlspecialchars(strip_tags($this->email));
-    echo $this->email;
+    
     // 帶入參數
     $stmt-> bind_param('s', $this->email);
  
@@ -69,7 +69,7 @@ function emailExists(){
  
     // 返回查詢的資料數
     $num = $stmt->num_rows();
- 
+    echo $num;
     // if email exists, assign values to object properties for easy access and use for php sessions
     if($num>0){
  
