@@ -24,7 +24,7 @@ $jwt = isset($data->jwt) ? $data->jwt : "";
 
 // if jwt is not empty
 if ($jwt) {
-
+    echo json_encode(array("message" => $jwt));
     // if decode succeed, show user details
     try {
         // decode jwt
