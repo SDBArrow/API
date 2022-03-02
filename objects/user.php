@@ -60,7 +60,7 @@ function emailExists(){
  
     // 消毒 
     $this->email=htmlspecialchars(strip_tags($this->email));
- 
+    echo $this->email;
     // 帶入參數
     $stmt-> bind_param('s', $this->email);
  
