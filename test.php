@@ -1,6 +1,6 @@
 <?php
 // files needed to connect to database
-include_once 'config/connect.php';
+include_once 'config/DBconnect.php';
 include_once 'objects/user.php';
  
 // get database connection
