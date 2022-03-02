@@ -67,14 +67,9 @@ function emailExists(){
     // execute the query
     $stmt->execute();
     $stmt->bind_result($this->id,$this->firstname,$this->lastname,$this->password);
+    
     // if email exists, assign values to object properties for easy access and use for php sessions
     if($stmt->fetch()){
-
-        // assign values to object properties
-        echo $this->id;
-        echo $this->firstname;
-        echo $this->lastname;
-        echo $this->password;
         return true;
     }
     return false;

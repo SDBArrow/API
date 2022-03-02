@@ -13,7 +13,7 @@ $user = new User($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
  
-$user->email = "mike@codeofaninja.com";
+$user->email = "";
 
 if($email_exists = $user->emailExists()){
 }else{
