@@ -1,6 +1,6 @@
 <?php
 // 限制接收數據的來源以及類型
-header("Access-Control-Allow-Origin: https://sign-register.herokuapp.com/");
+header("Access-Control-Allow-Origin: http://sign-register.herokuapp.com/");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
