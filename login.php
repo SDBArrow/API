@@ -34,7 +34,7 @@ use \Firebase\JWT\JWT;
  
 // 確認email是否存在 密碼是否正確
 if($email_exists && password_verify($data->password, $user->password)){
-/*
+
     $token = array(
        "iat" => $issued_at,
        "exp" => $expiration_time,
@@ -51,15 +51,13 @@ if($email_exists && password_verify($data->password, $user->password)){
     http_response_code(200);
  
     // generate jwt
-    $jwt = JWT::encode($token, $key);
+    $jwt = JWT::encode($token, $key, 'HS256');
     echo json_encode(
             array(
                 "message" => "Successful login.",
                 "jwt" => $jwt
             )
         );
- */
-    echo json_encode(array("message" => "Login."));
 }// login failed
 else{
  
