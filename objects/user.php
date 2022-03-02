@@ -65,23 +65,16 @@ function emailExists(){
     $stmt-> bind_param('s', $this->email);
  
     // execute the query
-    if($stmt->execute()){
-        echo "aa";
-    }else{
-        echo "bb";
-    }
-
+    $stmt->execute();
+    $stmt->bind_result($this->id,$this->firstname,$this->lastname,$this->password);
     // if email exists, assign values to object properties for easy access and use for php sessions
     if($stmt->fetch()){
- 
-        // get record details / values
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
- 
+
         // assign values to object properties
-        echo $this->id = $row['id'];
-        echo $this->firstname = $row['firstname'];
-        echo $this->lastname = $row['lastname'];
-        echo $this->password = $row['password'];
+        echo $this->id;
+        echo $this->firstname;
+        echo $this->lastname;
+        echo $this->password;
         return true;
     }
     return false;
