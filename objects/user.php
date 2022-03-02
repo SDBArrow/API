@@ -68,7 +68,7 @@ function emailExists(){
     $stmt->execute();
  
     // 返回查詢的資料數
-    $num = $stmt->rowCount();
+    $num = $stmt->num_rows();
  
     // if email exists, assign values to object properties for easy access and use for php sessions
     if($num>0){
