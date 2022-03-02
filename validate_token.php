@@ -14,7 +14,6 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 
 use \Firebase\JWT\JWT;
-use \Firebase\JWT\Key;
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -27,7 +26,7 @@ if ($jwt) {
     // if decode succeed, show user details
     try {
         // decode jwt
-        $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        $decoded = JWT::decode($jwt, $key, array('HS256'));
 
         // set response code
         http_response_code(200);
