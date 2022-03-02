@@ -75,10 +75,10 @@ function emailExists(){
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
  
         // assign values to object properties
-        $this->id = $row['id'];
-        $this->firstname = $row['firstname'];
-        $this->lastname = $row['lastname'];
-        $this->password = $row['password'];
+        echo $this->id = $row['id'];
+        echo $this->firstname = $row['firstname'];
+        echo $this->lastname = $row['lastname'];
+        echo $this->password = $row['password'];
         return true;
     }
     return false;
