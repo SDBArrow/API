@@ -29,7 +29,7 @@ if ($jwt) {
         echo json_encode(array("message" => "try"));
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-
+        echo json_encode(array("message" => "try"));
         // set response code
         http_response_code(200);
 
