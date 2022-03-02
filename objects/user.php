@@ -83,10 +83,10 @@ class User
     {
 
         // 判斷密碼是否需要被更新
-        $password_set = !empty($this->password) ? ", password = ?" : "";
+        $password_set = !empty($this->password) ? ", password =?" : "";
 
         // 更新資料
-        $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =?, email =? ".$password_set."WHERE id =?";
+        $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =?, email =? ".$password_set." WHERE id =?";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
