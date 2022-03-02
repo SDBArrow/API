@@ -14,7 +14,7 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 
 use \Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use \Firebase\JWT\Key;
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
@@ -24,7 +24,6 @@ $jwt = isset($data->jwt) ? $data->jwt : "";
 
 // if jwt is not empty
 if ($jwt) {
-    echo json_encode(array("message" => $jwt));
     // if decode succeed, show user details
     try {
         // decode jwt
