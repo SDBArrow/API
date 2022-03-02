@@ -32,9 +32,9 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 use \Firebase\JWT\JWT;
  
-// check if email exists and if password is correct
+// 確認email是否存在 密碼是否正確
 if($email_exists && password_verify($data->password, $user->password)){
- 
+/*
     $token = array(
        "iat" => $issued_at,
        "exp" => $expiration_time,
@@ -58,7 +58,8 @@ if($email_exists && password_verify($data->password, $user->password)){
                 "jwt" => $jwt
             )
         );
- 
+ */
+    echo json_encode(array("message" => "Login."));
 }// login failed
 else{
  
