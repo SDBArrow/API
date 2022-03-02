@@ -70,12 +70,9 @@ function emailExists(){
     }else{
         echo "bb";
     }
- 
-    // 返回查詢的資料數
-    $num = $stmt->num_rows();
-    echo $num;
+
     // if email exists, assign values to object properties for easy access and use for php sessions
-    if($num>0){
+    if($stmt->fetch()){
  
         // get record details / values
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
