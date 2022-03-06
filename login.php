@@ -47,7 +47,6 @@ if($email_exists && password_verify($data->password, $user->password)){
            "lastname" => $user->lastname,
            "email" => $user->email
        ),
-       'result' => 'ok'
     );
  
     // set response code
@@ -58,7 +57,8 @@ if($email_exists && password_verify($data->password, $user->password)){
     echo json_encode(
             array(
                 "message" => "Successful login.",
-                "jwt" => $jwt
+                "jwt" => $jwt,
+                "result" => 'ok',
             )
         );
 }// login failed
@@ -68,6 +68,11 @@ else{
     http_response_code(401);
  
     // tell the user login failed
-    echo json_encode(array("message" => "Login failed."));
+    echo json_encode(
+        array(
+            "message" => "Login failed.",
+            "result" => 'ok',            
+        )
+    );
 }
 ?>
