@@ -9,7 +9,7 @@ header("Access-Control-Request-Headers: Origin, X-Requested-With, content-Type, 
 
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
-    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Origin: https://testrosagv.herokuapp.com/");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
     header('Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH');
     file_put_contents('option.txt',json_encode($_REQUEST));
@@ -69,7 +69,6 @@ if ($email_exists && password_verify($data->password, $user->password)) {
         array(
             "message" => "Successful login.",
             "jwt" => $jwt,
-            "result" => 'ok',
         )
     );
 } // login failed
@@ -82,7 +81,6 @@ else {
     echo json_encode(
         array(
             "message" => "Login failed.",
-            "result" => 'ok',
         )
     );
 }
