@@ -1,21 +1,19 @@
 <?php
 // 限制接收數據的來源以及類型
-header('Access-Control-Allow-Origin:*');
-// 响应类型
-header('Access-Control-Allow-Methods:*');
-// 响应头设置
-header('Access-Control-Allow-Headers:content-type,token,id');
-header("Access-Control-Request-Headers: Origin, X-Requested-With, content-Type, Accept, Authorization");
+header("Access-Control-Allow-Origin: *");
+header("Content-Type: application/json; charset=UTF-8");
+header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Max-Age: 3600");
+header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Credentials: true");
 
-
-if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
-    header("Access-Control-Allow-Origin: https://testrosagv.herokuapp.com");
-    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    header('Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH');
-    file_put_contents('option.txt',json_encode($_REQUEST));
-    exit;
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == "OPTIONS") {
+    header('Access-Control-Allow-Origin: https://testrosagv.herokuapp.com');
+    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
+    header("HTTP/1.1 200 OK");
+    die();
 }
-
 
 // files needed to connect to database
 include_once 'config/DBconnect.php';
@@ -69,6 +67,7 @@ if ($email_exists && password_verify($data->password, $user->password)) {
         array(
             "message" => "Successful login.",
             "jwt" => $jwt,
+            "result" => 'ok',
         )
     );
 } // login failed
@@ -81,6 +80,7 @@ else {
     echo json_encode(
         array(
             "message" => "Login failed.",
+            "result" => 'ok',
         )
     );
 }
