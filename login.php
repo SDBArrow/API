@@ -34,7 +34,7 @@ include_once 'libs/php-jwt-main/src/JWT.php';
 use \Firebase\JWT\JWT;
  
 // 確認email是否存在 密碼是否正確
-if($email_exists && password_verify($data->password, $user->password)){
+if($email_exists && password_verify($data->password, $user->password) && !($_SERVER['REQUEST_METHOD'] === 'OPTIONS')){
 
     $token = array(
        "iat" => $issued_at,
