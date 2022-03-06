@@ -67,7 +67,6 @@ if ($email_exists && password_verify($data->password, $user->password)) {
         array(
             "message" => "Successful login.",
             "jwt" => $jwt,
-            "result" => 'ok',
         )
     );
 } // login failed
@@ -80,7 +79,6 @@ else {
     echo json_encode(
         array(
             "message" => "Login failed.",
-            "result" => 'ok',
         )
     );
 }
