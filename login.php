@@ -1,11 +1,12 @@
 <?php
 // 限制接收數據的來源以及類型
-header("Access-Control-Allow-Origin: https://testrosagv.herokuapp.com");
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-header("Access-Control-Allow-Credentials: true");
+header('Access-Control-Allow-Origin:*');
+// 响应类型
+header('Access-Control-Allow-Methods:*');
+// 响应头设置
+header('Access-Control-Allow-Headers:content-type,token,id');
+header("Access-Control-Request-Headers: Origin, X-Requested-With, content-Type, Accept, Authorization");
+
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
     header("Access-Control-Allow-Origin: *");
