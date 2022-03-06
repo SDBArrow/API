@@ -7,13 +7,14 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 header("Access-Control-Allow-Credentials: true");
 
-$method = $_SERVER['REQUEST_METHOD'];
-if ($method == "OPTIONS") {
-    header('Access-Control-Allow-Origin: https://testrosagv.herokuapp.com');
-    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
-    header("HTTP/1.1 200 OK");
-    die();
+if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
+    header('Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH');
+    file_put_contents('option.txt',json_encode($_REQUEST));
+    exit;
 }
+
 
 // files needed to connect to database
 include_once 'config/DBconnect.php';
