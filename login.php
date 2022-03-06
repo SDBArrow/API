@@ -9,7 +9,7 @@ header("Access-Control-Request-Headers: Origin, X-Requested-With, content-Type, 
 
 
 if($_SERVER['REQUEST_METHOD'] == 'OPTIONS'){
-    header("Access-Control-Allow-Origin: https://testrosagv.herokuapp.com/");
+    header("Access-Control-Allow-Origin: https://testrosagv.herokuapp.com");
     header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization");
     header('Access-Control-Allow-Methods: GET, POST, PUT,DELETE,OPTIONS,PATCH');
     file_put_contents('option.txt',json_encode($_REQUEST));
