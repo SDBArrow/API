@@ -33,8 +33,9 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 use \Firebase\JWT\JWT;
  
+
 // 確認email是否存在 密碼是否正確
-if($email_exists && password_verify($data->password, $user->password) && !($_SERVER['REQUEST_METHOD'] === 'OPTIONS')){
+if($email_exists && password_verify($data->password, $user->password)){
 
     $token = array(
        "iat" => $issued_at,
@@ -45,7 +46,8 @@ if($email_exists && password_verify($data->password, $user->password) && !($_SER
            "firstname" => $user->firstname,
            "lastname" => $user->lastname,
            "email" => $user->email
-       )
+       ),
+       'result' => 'ok'
     );
  
     // set response code
