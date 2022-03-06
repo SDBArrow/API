@@ -6,6 +6,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Access-Control-Allow-Headers,Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
 header("Access-Control-Allow-Credentials: true");
+header("HTTP/1.1 200 OK");
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
