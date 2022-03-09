@@ -1,10 +1,20 @@
 <?php
 // 限制接收數據的來源以及類型
-header("Access-Control-Allow-Origin: http://sign-register.herokuapp.com/");
+header('Access-Control-Allow-Origin: *');
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Access-Control-Allow-Headers,Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
+header("Access-Control-Allow-Credentials: true");
+
+//CORS 非簡單請求會先發送 預檢請求要回傳連線狀態
+$method = $_SERVER['REQUEST_METHOD'];
+if ($method == "OPTIONS") {
+    header('Access-Control-Allow-Origin: *');
+    header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Access-Control-Allow-Headers,Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
+    header("HTTP/1.1 200 OK");
+    die();
+}
 
 // required to decode jwt
 include_once 'config/core.php';

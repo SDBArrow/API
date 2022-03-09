@@ -16,49 +16,48 @@ if ($method == "OPTIONS") {
     die();
 }
 
-// 引入檔案
+// files needed to connect to database
 include_once 'config/DBconnect.php';
 include_once 'objects/user.php';
- 
-// get database connection (connect.php)
+
+// get database connection
 $database = new Database();
 $db = $database->getConnection();
- 
-// instantiate product object
+
+// instantiate user object
 $user = new User($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
- 
+
 // set product property values
-$user->firstname = $data->firstname;
-$user->lastname = $data->lastname;
 $user->email = $data->email;
-$user->password = $data->password;
- 
-// 檢查有無空值後將資料加到資料庫
-if(
-    !empty($user->firstname) &&
-    !empty($user->email) &&
-    !empty($user->password) &&
-    $user->create()
-){
- 
-    // set response code
+$email_exists = $user->emailExists();
+
+// 引入生成 json web token 的library
+include_once 'config/core.php';
+include_once 'libs/php-jwt-main/src/BeforeValidException.php';
+include_once 'libs/php-jwt-main/src/ExpiredException.php';
+include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
+include_once 'libs/php-jwt-main/src/JWT.php';
+
+
+// 確認email是否存在 密碼是否正確
+if ($email_exists) {
     http_response_code(200);
- 
-    // display message: user was created
-    echo json_encode(array("message" => "User was created."));
+    echo json_encode(
+        array(
+            "message" => "Email exist.",
+            "code" => "51",
+        )
+    );
+} 
+else {
+    http_response_code(401);
+    echo json_encode(
+        array(
+            "message" => "Email doesn't exist.",
+            "code" => "52",
+        )
+    );
 }
- 
-// message if unable to create user
-else{
- 
-    // set response code
-    http_response_code(400);
- 
-    // display message: unable to create user
-    echo json_encode(array("message" => "Unable to create user."));
-}
-?>
- 
