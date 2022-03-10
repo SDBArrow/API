@@ -86,7 +86,7 @@ class User
         $password_set = !empty($this->password) ? ", password =?" : "";
 
         // 更新資料
-        $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =?, email =? ".$password_set." WHERE id =?";
+        $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =?, email =? " . $password_set . " WHERE id =?";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
@@ -102,7 +102,7 @@ class User
             $this->password = htmlspecialchars(strip_tags($this->password));
             $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
             $stmt->bind_param('sssss', $this->firstname, $this->lastname, $this->email, $password_hash, $this->id);
-        }else{
+        } else {
             // unique ID of record to be edited
             $stmt->bind_param('ssss', $this->firstname, $this->lastname, $this->email, $this->id);
         }
@@ -113,5 +113,28 @@ class User
         }
 
         return false;
+    }
+    public function send_email()
+    {
+        $send_email = getenv('email');
+        $email = new \SendGrid\Mail\Mail();
+        $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
+        $email->setSubject("AIMMA_AGV PASSWORD RESET");
+        $email->addTo("測試2");
+        $email->addContent("text/plain", "測試1");
+        $email->addContent(
+            "text/html",
+            "<strong>請看副檔</strong>"
+        );
+        //發送email
+        $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+        try {
+            $response = $sendgrid->send($email);
+            print $response->statusCode() . "\n";
+            print_r($response->headers());
+            print $response->body() . "\n";
+        } catch (Exception $e) {
+            echo 'Caught exception: ' . $e->getMessage() . "\n";
+        }
     }
 }

@@ -44,6 +44,7 @@ include_once 'libs/php-jwt-main/src/JWT.php';
 
 // 確認email是否存在 密碼是否正確
 if ($email_exists) {
+    
     http_response_code(200);
     echo json_encode(
         array(
