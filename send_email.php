@@ -1,4 +1,5 @@
 <?php
+require 'vendor/autoload.php'; // If you're using Composer (recommended)
 $send_email = getenv('email');
 $email = new \SendGrid\Mail\Mail();
 $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
