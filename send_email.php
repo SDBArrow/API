@@ -4,7 +4,7 @@ $send_email = getenv('email');
 $email = new \SendGrid\Mail\Mail();
 $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
 $email->setSubject("AIMMA_AGV PASSWORD RESET");
-$email->addTo("j25889651556@gmail.com","楊子弘");
+$email->addTo("j2588965156@gmail.com","楊子弘");
 $email->addContent("text/plain", "測試1");
 $email->addContent(
     "text/html",
