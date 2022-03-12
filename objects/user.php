@@ -154,8 +154,10 @@ class User
                 print $response->body() . "\n";
             } catch (Exception $e) {
                 echo 'Caught exception: ' . $e->getMessage() . "\n";
-                return true;
+                return false;
             }
+            return true;
+        }else{
             return false;
         }
     }

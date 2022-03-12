@@ -32,7 +32,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
 $user->email = $data->email;
-$email_exists = $user->emailExists();
+$email_help = $user->send_email();
 
 // 引入生成 json web token 的library
 include_once 'config/core.php';
@@ -42,8 +42,8 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 
 
-// 確認email是否存在 密碼是否正確
-if ($email_exists) {
+// 如果信件寄件成功
+if ($email_help) {
     
     http_response_code(200);
     echo json_encode(
