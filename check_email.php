@@ -43,7 +43,7 @@ include_once 'libs/php-jwt-main/src/JWT.php';
 
 
 // 如果信件寄件成功
-if ($email_help) {
+if ($email_help && !empty($user->email)) {
     
     http_response_code(200);
     echo json_encode(
