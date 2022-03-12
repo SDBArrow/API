@@ -116,26 +116,47 @@ class User
     }
     public function send_email()
     {
-        require 'vendor/autoload.php'; // If you're using Composer (recommended)
-        $send_email = getenv('email');
-        $email = new \SendGrid\Mail\Mail();
-        $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
-        $email->setSubject("AIMMA_AGV PASSWORD RESET");
-        $email->addTo("j25889651556@gmail.com","楊子弘");
-        $email->addContent("text/plain", "AIMMA_AGV PASSWORD RESET");
-        $email->addContent(
-            "text/html",
-            "<strong>請看副檔</strong>"
-        );
-        //發送email
-        $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
-        try {
-            $response = $sendgrid->send($email);
-            print $response->statusCode() . "\n";
-            print_r($response->headers());
-            print $response->body() . "\n";
-        } catch (Exception $e) {
-            echo 'Caught exception: ' . $e->getMessage() . "\n";
+        // query to check if email exists
+        $sql = "SELECT firstname, lastname FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 消毒 
+        $this->email = htmlspecialchars(strip_tags($this->email));
+
+        // 帶入參數
+        $stmt->bind_param('s', $this->email);
+
+        // execute the query
+        $stmt->execute();
+        $stmt->bind_result($this->firstname, $this->lastname);
+
+        if ($stmt->fetch()) {
+            require 'vendor/autoload.php'; // If you're using Composer (recommended)
+            $send_email = getenv('email');
+            $email = new \SendGrid\Mail\Mail();
+            $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
+            $email->setSubject("AIMMA_AGV PASSWORD RESET");
+            $email->addTo($this->email, $this->firstname.$this->lastname);
+            $email->addContent("text/plain", "AIMMA_AGV PASSWORD RESET");
+            $email->addContent(
+                "text/html",
+                "<strong>請看副檔</strong>"
+            );
+            //發送email
+            $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+            try {
+                $response = $sendgrid->send($email);
+                print $response->statusCode() . "\n";
+                print_r($response->headers());
+                print $response->body() . "\n";
+            } catch (Exception $e) {
+                echo 'Caught exception: ' . $e->getMessage() . "\n";
+                return true;
+            }
+            return false;
         }
     }
 }
