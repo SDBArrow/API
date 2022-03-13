@@ -43,19 +43,28 @@ if ($email_exists == true) {
     http_response_code(404);
 
     // display message: user was created
-    echo json_encode(array("message" => "Email重複"));
+    echo json_encode(array(
+        "message" => "Email重複",
+        "code" => "52",
+    ));
 } elseif (!empty($user->firstname) && !empty($user->email) && !empty($user->password) && $user->create()) {
 
     // set response code
     http_response_code(200);
 
     // display message: user was created
-    echo json_encode(array("message" => "註冊完成"));
+    echo json_encode(array(
+        "message" => "註冊完成",
+        "code" => "51",
+    ));
 } else {
 
     // set response code
     http_response_code(400);
 
     // display message: unable to create user
-    echo json_encode(array("message" => "註冊失敗"));
+    echo json_encode(array(
+        "message" => "註冊失敗",
+        "code" => "53",
+    ));
 }
