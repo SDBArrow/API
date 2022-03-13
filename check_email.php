@@ -48,7 +48,7 @@ if ($email_help && !empty($user->email)) {
     http_response_code(200);
     echo json_encode(
         array(
-            "message" => "Email 已寄送.",
+            "message" => "Email 已寄送",
             "code" => "51",
         )
     );
@@ -57,7 +57,7 @@ elseif($email_help == false){
     http_response_code(404);
     echo json_encode(
         array(
-            "message" => "Email 不存在.",
+            "message" => "Email 不存在",
             "code" => "52",
         )
     );
