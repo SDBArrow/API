@@ -66,7 +66,8 @@ if ($email_exists && password_verify($data->password, $user->password)) {
     $jwt = JWT::encode($token, $key, 'HS256');
     echo json_encode(
         array(
-            "message" => "Successful login.",
+            "message" => "登入成功",
+            "code" => "11",
             "jwt" => $jwt,
         )
     );
@@ -79,7 +80,8 @@ else {
     // tell the user login failed
     echo json_encode(
         array(
-            "message" => "Login failed.",
+            "message" => "登入失敗",
+            "code" => "12",
         )
     );
 }
