@@ -48,17 +48,26 @@ if ($email_help && !empty($user->email)) {
     http_response_code(200);
     echo json_encode(
         array(
-            "message" => "Email exist.",
+            "message" => "Email 已寄送.",
             "code" => "51",
         )
     );
 } 
+elseif($email_help == false){
+    http_response_code(404);
+    echo json_encode(
+        array(
+            "message" => "Email 不存在.",
+            "code" => "52",
+        )
+    );
+}
 else {
     http_response_code(401);
     echo json_encode(
         array(
-            "message" => "Email doesn't exist.",
-            "code" => "52",
+            "message" => "connect failed",
+            "code" => "01",
         )
     );
 }
