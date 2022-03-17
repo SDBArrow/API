@@ -46,6 +46,7 @@ if ($jwt) {
 
         // show user details
         echo json_encode(array(
+            "code" => "41",
             "message" => "Access granted.",
             "data" => $decoded->data
         ));
@@ -59,16 +60,20 @@ if ($jwt) {
 
         // tell the user access denied  & show error message
         echo json_encode(array(
+            "code" => "42",
             "message" => "Access denied.",
             "error" => $e->getMessage()
         ));
     }
-}// show error message if jwt is empty
-else{
- 
+} // show error message if jwt is empty
+else {
+
     // set response code
     http_response_code(401);
- 
+
     // tell the user access denied
-    echo json_encode(array("message" => "Access denied."));
+    echo json_encode(array(
+        "code" => "42",
+        "message" => "Access denied."
+    ));
 }
