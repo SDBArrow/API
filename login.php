@@ -7,6 +7,10 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Access-Control-Allow-Headers,Content-Type, Accept, Access-Control-Request-Method,Access-Control-Request-Headers, Authorization");
 header("Access-Control-Allow-Credentials: true");
 
+header("HTTP/1.1 200 OK");
+
+
+
 //CORS 非簡單請求會先發送 預檢請求要回傳連線狀態
 $method = $_SERVER['REQUEST_METHOD'];
 if ($method == "OPTIONS") {
