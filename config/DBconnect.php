@@ -22,7 +22,7 @@ class Database
         $db_connection->real_connect($server, $db_username, $db_password, $db_name, 3306, NULL, MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);
 
         $db_connection->query("SET NAMES 'UTF8'"); //設定編碼
-        
+
         return $db_connection;
         /* no SSL
         $con = mysqli_connect($server,$db_username,$db_password);//連結資料庫

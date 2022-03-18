@@ -120,4 +120,3 @@ else{
     // tell the user access denied
     echo json_encode(array("message" => "Access denied."));
 }
-?>

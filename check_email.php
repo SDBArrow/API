@@ -44,7 +44,7 @@ include_once 'libs/php-jwt-main/src/JWT.php';
 
 // 如果信件寄件成功
 if ($email_help && !empty($user->email)) {
-    
+
     http_response_code(200);
     echo json_encode(
         array(
@@ -52,8 +52,7 @@ if ($email_help && !empty($user->email)) {
             "code" => "51",
         )
     );
-} 
-elseif($email_help == false){
+} elseif ($email_help == false) {
     http_response_code(404);
     echo json_encode(
         array(
@@ -61,8 +60,7 @@ elseif($email_help == false){
             "code" => "52",
         )
     );
-}
-else {
+} else {
     http_response_code(401);
     echo json_encode(
         array(

@@ -139,7 +139,7 @@ class User
             $email = new \SendGrid\Mail\Mail();
             $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
             $email->setSubject("AIMMA_AGV PASSWORD RESET");
-            $email->addTo($this->email, $this->firstname.$this->lastname);
+            $email->addTo($this->email, $this->firstname . $this->lastname);
             $email->addContent("text/plain", "AIMMA_AGV PASSWORD RESET");
             $email->addContent(
                 "text/html",
@@ -154,7 +154,7 @@ class User
                 return false;
             }
             return true;
-        }else{
+        } else {
             return false;
         }
     }
