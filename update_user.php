@@ -57,7 +57,7 @@ if ($jwt) {
         // set user property values
         $user->firstname = $data->firstname;
         $user->lastname = $data->lastname;
-        $user->email = $data->email;
+        $user->email = $decoded->data->email;
         $user->password = $data->password;
         $user->id = $decoded->data->id;
 
