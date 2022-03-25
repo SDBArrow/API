@@ -82,29 +82,33 @@ class User
     public function update()
     {
 
-        // 判斷密碼是否需要被更新
-        $password_set = !empty($this->password) ? ", password =?" : "";
+        $password_set = !empty($this->password);
+        $userdata_set = !empty($this->firstname) && !empty($this->lastname);
 
-        // 更新資料
-        $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =?, email =? " . $password_set . " WHERE id =?";
+        // 判斷密碼是否需要被更新
+        if ($password_set) {
+            $sql = "UPDATE " . $this->table_name . " SET password =? WHERE id =?";
+        } else if ($userdata_set) {
+            $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =? WHERE id =?";
+        }
+
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
 
-        // sanitize
-        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
-        $this->lastname = htmlspecialchars(strip_tags($this->lastname));
-        $this->email = htmlspecialchars(strip_tags($this->email));
 
-        // 加密密碼，並帶入值
-        if (!empty($this->password)) {
+        //判斷是改密碼還改資料
+        if ($password_set) {
             $this->password = htmlspecialchars(strip_tags($this->password));
-            $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
-            $stmt->bind_param('sssss', $this->firstname, $this->lastname, $this->email, $password_hash, $this->id);
-        } else {
+            $password_hash = password_hash($this->password, PASSWORD_BCRYPT); // 加密密碼，並帶入值
+            $stmt->bind_param('ssss', $this->firstname, $this->lastname, $password_hash, $this->id);
+        } else if($userdata_set) {
+            // sanitize
+            $this->firstname = htmlspecialchars(strip_tags($this->firstname));
+            $this->lastname = htmlspecialchars(strip_tags($this->lastname));
             // unique ID of record to be edited
-            $stmt->bind_param('ssss', $this->firstname, $this->lastname, $this->email, $this->id);
+            $stmt->bind_param('sss', $this->firstname, $this->lastname, $this->id);
         }
 
         // execute the query
