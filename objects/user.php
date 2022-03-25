@@ -102,7 +102,7 @@ class User
         if ($password_set) {
             $this->password = htmlspecialchars(strip_tags($this->password));
             $password_hash = password_hash($this->password, PASSWORD_BCRYPT); // 加密密碼，並帶入值
-            $stmt->bind_param('ssss', $this->firstname, $this->lastname, $password_hash, $this->id);
+            $stmt->bind_param('ss', $password_hash, $this->id);
         } else if($userdata_set) {
             // sanitize
             $this->firstname = htmlspecialchars(strip_tags($this->firstname));
