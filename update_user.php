@@ -84,6 +84,7 @@ if ($jwt) {
             echo json_encode(
                 array(
                     "message" => "User was updated.",
+                    "code" => "31",
                     "jwt" => $jwt
                 )
             );
@@ -95,7 +96,10 @@ if ($jwt) {
             http_response_code(401);
 
             // show error message
-            echo json_encode(array("message" => "Unable to update user."));
+            echo json_encode(array(
+                "message" => "Unable to update user.",
+                "code" => "32",
+            ));
         }
     }
 
@@ -108,15 +112,19 @@ if ($jwt) {
         // show error message
         echo json_encode(array(
             "message" => "Access denied.",
+            "code" => "32",
             "error" => $e->getMessage()
         ));
     }
-}// show error message if jwt is empty
-else{
- 
+} // show error message if jwt is empty
+else {
+
     // set response code
     http_response_code(401);
- 
+
     // tell the user access denied
-    echo json_encode(array("message" => "Access denied."));
+    echo json_encode(array(
+        "message" => "Access denied.",
+        "code" => "32",
+    ));
 }
