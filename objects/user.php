@@ -92,11 +92,9 @@ class User
             $sql = "UPDATE " . $this->table_name . " SET firstname =?, lastname =? WHERE id =?";
         }
 
-
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
-
 
         //判斷是改密碼還改資料
         if ($password_set) {
