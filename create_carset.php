@@ -20,19 +20,15 @@ if ($method == "OPTIONS") {
 include_once 'config/DBconnect.php';
 include_once 'objects/user.php';
 
-// get database connection
+// get database connection (connect.php)
 $database = new Database();
 $db = $database->getConnection();
 
-// instantiate user object
+// instantiate product object
 $user = new User($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-
-// set product property values
-$user->email = $data->email;
-$email_exists = $user->emailExists();
 
 // 引入生成 json web token 的library
 include_once 'config/core.php';
@@ -42,46 +38,60 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 
 use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
 
+// set product property values
+$user->carname = $data->carname;
+$user->carip = $data->carip;
+$user->carport = $data->carport;
+// get posted data
 
-// 確認email是否存在 密碼是否正確
-if ($email_exists && password_verify($data->password, $user->password)) {
+// get jwt
+$jwt = isset($data->jwt) ? $data->jwt : "";
 
-    $token = array(
-        "iat" => $issued_at,
-        "exp" => $expiration_time,
-        "iss" => $issuer,
-        "data" => array(
-            "id" => $user->id,
-            "firstname" => $user->firstname,
-            "lastname" => $user->lastname,
-            "email" => $user->email
-        ),
-    );
+// if jwt is not empty
+if ($jwt) {
+    // if decode succeed, show user details
+    try {
+        // decode jwt
+        $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-    // set response code
-    http_response_code(200);
+        if (!empty($user->firstname) && !empty($user->email) && !empty($user->password) && $user->create()) {
 
-    // generate jwt
-    $jwt = JWT::encode($token, $key, 'HS256');
-    echo json_encode(
-        array(
-            "message" => "登入成功",
-            "code" => "11",
-            "jwt" => $jwt,
-        )
-    );
-} // login failed
+            // set response code
+            http_response_code(200);
+
+            // show user details
+            echo json_encode(array(
+                "code" => "41",
+                "message" => "Access granted.",
+                "data" => $decoded->data
+            ));
+        }
+    }
+
+    // if decode fails, it means jwt is invalid
+    catch (Exception $e) {
+
+        // set response code
+        http_response_code(401);
+
+        // tell the user access denied  & show error message
+        echo json_encode(array(
+            "code" => "42",
+            "message" => "Access denied.",
+            "error" => $e->getMessage()
+        ));
+    }
+} // show error message if jwt is empty
 else {
 
     // set response code
     http_response_code(401);
 
-    // tell the user login failed
-    echo json_encode(
-        array(
-            "message" => "登入失敗",
-            "code" => "12",
-        )
-    );
+    // tell the user access denied
+    echo json_encode(array(
+        "code" => "42",
+        "message" => "Access denied."
+    ));
 }
