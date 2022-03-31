@@ -187,7 +187,6 @@ class User
         if ($stmt->execute()) {
             return true;
         }
-
         return false;
     }
 }

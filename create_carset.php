@@ -16,7 +16,18 @@ if ($method == "OPTIONS") {
     die();
 }
 
-// 引入檔案
+// required to encode json web token
+include_once 'config/core.php';
+include_once 'libs/php-jwt-main/src/BeforeValidException.php';
+include_once 'libs/php-jwt-main/src/ExpiredException.php';
+include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
+include_once 'libs/php-jwt-main/src/JWT.php';
+include_once 'libs/php-jwt-main/src/Key.php';
+
+use \Firebase\JWT\JWT;
+use \Firebase\JWT\Key;
+
+// files needed to connect to database
 include_once 'config/DBconnect.php';
 include_once 'objects/user.php';
 
@@ -29,16 +40,6 @@ $user = new User($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-
-// 引入生成 json web token 的library
-include_once 'config/core.php';
-include_once 'libs/php-jwt-main/src/BeforeValidException.php';
-include_once 'libs/php-jwt-main/src/ExpiredException.php';
-include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
-include_once 'libs/php-jwt-main/src/JWT.php';
-
-use \Firebase\JWT\JWT;
-use \Firebase\JWT\Key;
 
 // set product property values
 $user->carname = $data->carname;
