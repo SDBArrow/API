@@ -204,7 +204,7 @@ class User
 
         // execute the query
         $stmt->execute();
-        $stmt->bind_result($this->car_name, $this->car_ip, $this->lastname, $this->car_port);
+        $stmt->bind_result($this->car_name, $this->car_ip, $this->car_port);
 
 
         $stmt->execute();
