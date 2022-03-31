@@ -54,17 +54,19 @@ if ($jwt) {
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
         $user->id = $decoded->data->id;
-        // set response code
-        http_response_code(200);
 
-        // show user details
-        echo json_encode(array(
-            "code" => "41",
-            "message" => "Access granted.",
-            "data" => $decoded->data
-        ));
+        if ($user->get_carset()) {
+
+            // set response code
+            http_response_code(200);
+
+            // show user details
+            echo json_encode(array(
+                "code" => "71",
+                "message" => "儲存成功",
+            ));
+        }
     }
-
     // if decode fails, it means jwt is invalid
     catch (Exception $e) {
 
@@ -86,7 +88,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "code" => "42",
+        "code" => "72",
         "message" => "Access denied."
     ));
 }
