@@ -203,13 +203,16 @@ class User
         $stmt->bind_param('s', $this->id);
 
         // execute the query
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while ($row = $result->fetch_assoc()) {
-            foreach ($row as $r) {
-                echo "$r ";
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            while ($return_data = $result->fetch_assoc()) {
+                foreach ($return_data as $r) {
+                    echo "$r ";
+                }
+                echo "\n";
             }
-            echo "\n";
+            return true;
         }
+        return false;
     }
 }
