@@ -68,7 +68,6 @@ if ($jwt) {
             echo json_encode(array(
                 "code" => "61",
                 "message" => "儲存成功",
-                "data" => $decoded->data
             ));
         }
     }
