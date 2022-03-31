@@ -42,9 +42,9 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$user->carname = $data->carname;
-$user->carip = $data->carip;
-$user->carport = $data->carport;
+$user->carname = $data->car_name;
+$user->carip = $data->car_ip;
+$user->carport = $data->car_port;
 // get posted data
 
 // get jwt
@@ -59,7 +59,7 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if (!empty($user->id) && !empty($user->carname) && !empty($user->carip) && !empty($user->car_port) && $user->create_cartset()) {
+        if (!empty($user->id) && !empty($user->car_name) && !empty($user->car_ip) && !empty($user->car_port) && $user->create_cartset()) {
 
             // set response code
             http_response_code(200);
