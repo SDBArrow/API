@@ -16,7 +16,7 @@ if ($method == "OPTIONS") {
     die();
 }
 
-// required to encode json web token
+// required to decode jwt
 include_once 'config/core.php';
 include_once 'libs/php-jwt-main/src/BeforeValidException.php';
 include_once 'libs/php-jwt-main/src/ExpiredException.php';
@@ -24,28 +24,24 @@ include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
 include_once 'libs/php-jwt-main/src/Key.php';
 
+
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\Key;
+
 
 // files needed to connect to database
 include_once 'config/DBconnect.php';
 include_once 'objects/user.php';
 
-// get database connection (connect.php)
+// get database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// instantiate product object
+// instantiate user object
 $user = new User($db);
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
-
-// set product property values
-$user->car_name = $data->car_name;
-$user->car_ip = $data->car_ip;
-$user->car_port = $data->car_port;
-// get posted data
 
 // get jwt
 $jwt = isset($data->jwt) ? $data->jwt : "";
@@ -58,18 +54,15 @@ if ($jwt) {
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
         $user->id = $decoded->data->id;
+        // set response code
+        http_response_code(200);
 
-        if (!empty($user->name) && !empty($user->ip) && !empty($user->port) && $user->create_cartset()) {
-
-            // set response code
-            http_response_code(200);
-
-            // show user details
-            echo json_encode(array(
-                "code" => "61",
-                "message" => "儲存成功",
-            ));
-        }
+        // show user details
+        echo json_encode(array(
+            "code" => "41",
+            "message" => "Access granted.",
+            "data" => $decoded->data
+        ));
     }
 
     // if decode fails, it means jwt is invalid
@@ -81,7 +74,7 @@ if ($jwt) {
         // tell the user access denied  & show error message
         echo json_encode(array(
             "code" => "42",
-            "message" => "驗證失敗",
+            "message" => "Access denied.",
             "error" => $e->getMessage()
         ));
     }
@@ -93,7 +86,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "code" => "62",
-        "message" => "儲存失敗"
+        "code" => "42",
+        "message" => "Access denied."
     ));
 }
