@@ -19,7 +19,7 @@ class User
     public $car_port;
     public $return_data;
     public $arr;
-    
+
     // constructor
     public function __construct($db)
     {
@@ -202,7 +202,7 @@ class User
 
         // 帶入參數
         $stmt->bind_param('s', $this->id);
-        $arr = array(); 
+        $arr = array();
         // execute the query
         if ($stmt->execute()) {
             $result = $stmt->get_result();
@@ -211,10 +211,18 @@ class User
                 foreach ($row as $r) {
                     echo "$r ";
                 }*/
-                array_push($arr,$row); 
+                array_push($arr, $row);
                 //echo "\n";
             }
-            echo $return_data = json_encode($arr,JSON_UNESCAPED_UNICODE); 
+            // set response code
+            http_response_code(200);
+
+            // show user details
+            echo json_encode(array(
+                "code" => "71",
+                "message" => "儲存成功",
+                "data" => json_encode($arr, JSON_UNESCAPED_UNICODE)
+            ));
             return true;
         }
         return false;

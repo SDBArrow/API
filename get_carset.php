@@ -57,15 +57,7 @@ if ($jwt) {
 
         if ($user->get_carset()) {
 
-            // set response code
-            http_response_code(200);
 
-            // show user details
-            echo json_encode(array(
-                "code" => "71",
-                "message" => "儲存成功",
-                "data" => $user->return_data
-            ));
         }
     }
     // if decode fails, it means jwt is invalid
