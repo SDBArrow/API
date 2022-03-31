@@ -42,15 +42,13 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
-$user->carname = $data->car_name;
-$user->carip = $data->car_ip;
-$user->carport = $data->car_port;
+$user->car_name = $data->car_name;
+$user->car_ip = $data->car_ip;
+$user->car_port = $data->car_port;
 // get posted data
 
 // get jwt
 $jwt = isset($data->jwt) ? $data->jwt : "";
-
-echo "1";
 
 // if jwt is not empty
 if ($jwt) {
@@ -60,9 +58,9 @@ if ($jwt) {
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
         $user->id = $decoded->data->id;
-        echo "1";
+
         if ($user->create_cartset()) {
-            echo "1";
+
             // set response code
             http_response_code(200);
 
