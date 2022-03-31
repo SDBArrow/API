@@ -221,7 +221,7 @@ class User
             echo json_encode(array(
                 "code" => "71",
                 "message" => "儲存成功",
-                "data" => json_encode($arr, JSON_UNESCAPED_UNICODE)
+                "data" => $arr
             ));
             return true;
         }
