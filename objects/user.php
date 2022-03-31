@@ -209,6 +209,6 @@ class User
         $stmt->execute();
         $result = $stmt->get_result();
         $return_data = $result->fetch_assoc();
-        echo count($return_data,3);
+        echo(count($return_data,3));
     }
 }
