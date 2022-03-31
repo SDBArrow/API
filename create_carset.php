@@ -56,7 +56,7 @@ if ($jwt) {
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        if (!empty($user->firstname) && !empty($user->email) && !empty($user->password) && $user->create()) {
+        if (!empty($user->carname) && !empty($user->carip) && !empty($user->car_port) && $user->create_cartset()) {
 
             // set response code
             http_response_code(200);
