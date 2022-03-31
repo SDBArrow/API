@@ -209,7 +209,7 @@ class User
 
         $stmt->execute();
         $result = $stmt->get_result();
-        $return_data = $result->fetch_assoc();
+        echo $result->fetch_assoc();
 
         // if email exists, assign values to object properties for easy access and use for php sessions
         if ($stmt->fetch()) {
