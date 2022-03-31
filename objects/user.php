@@ -204,11 +204,7 @@ class User
 
         // execute the query
         $stmt->execute();
-        $stmt->bind_result($this->car_name, $this->car_ip, $this->car_port);
-
-        $stmt->execute();
         $result = $stmt->get_result();
         $return_data = $result->fetch_assoc();
-        echo(count($return_data,3));
     }
 }
