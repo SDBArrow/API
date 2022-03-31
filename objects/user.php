@@ -214,15 +214,6 @@ class User
                 array_push($arr, $row);
                 //echo "\n";
             }
-            // set response code
-            http_response_code(200);
-
-            // show user details
-            echo json_encode(array(
-                "code" => "71",
-                "message" => "儲存成功",
-                "data" => $arr
-            ));
             return true;
         }
         return false;
