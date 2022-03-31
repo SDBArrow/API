@@ -55,11 +55,12 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
+        echo "1";
         if ($user->get_carset()) {
 
             // set response code
             http_response_code(200);
-
+            echo "1";
             // show user details
             echo json_encode(array(
                 "code" => "71",
