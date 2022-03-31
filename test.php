@@ -12,9 +12,9 @@ $user = new User($db);
 
 
 // set product property values
-$user->carname = "123";
-$user->carip = "456";
-$user->carport = "789";
+$user->car_name = "123";
+$user->car_ip = "456";
+$user->car_port = "789";
 
 $user->id = "89";
 $user->create_cartset();
