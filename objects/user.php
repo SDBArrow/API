@@ -18,6 +18,7 @@ class User
     public $car_ip;
     public $car_port;
 
+    public $return_data;
     // constructor
     public function __construct($db)
     {
@@ -198,15 +199,17 @@ class User
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
 
-        // 消毒 
-        $this->email = htmlspecialchars(strip_tags($this->email));
-
         // 帶入參數
-        $stmt->bind_param('s', $this->email);
+        $stmt->bind_param('s', $this->id);
 
         // execute the query
         $stmt->execute();
-        $stmt->bind_result($this->id, $this->firstname, $this->lastname, $this->password);
+        $stmt->bind_result($this->car_name, $this->car_ip, $this->lastname, $this->car_port);
+
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $return_data = $result->fetch_assoc();
 
         // if email exists, assign values to object properties for easy access and use for php sessions
         if ($stmt->fetch()) {
