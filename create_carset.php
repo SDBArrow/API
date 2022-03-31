@@ -56,15 +56,17 @@ if ($jwt) {
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        if (!empty($user->carname) && !empty($user->carip) && !empty($user->car_port) && $user->create_cartset()) {
+        $user->id = $decoded->data->id;
+
+        if (!empty($user->id) && !empty($user->carname) && !empty($user->carip) && !empty($user->car_port) && $user->create_cartset()) {
 
             // set response code
             http_response_code(200);
 
             // show user details
             echo json_encode(array(
-                "code" => "41",
-                "message" => "Access granted.",
+                "code" => "61",
+                "message" => "儲存成功",
                 "data" => $decoded->data
             ));
         }
@@ -79,7 +81,7 @@ if ($jwt) {
         // tell the user access denied  & show error message
         echo json_encode(array(
             "code" => "42",
-            "message" => "Access denied.",
+            "message" => "驗證失敗",
             "error" => $e->getMessage()
         ));
     }
@@ -91,7 +93,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "code" => "42",
-        "message" => "Access denied."
+        "code" => "62",
+        "message" => "儲存失敗"
     ));
 }

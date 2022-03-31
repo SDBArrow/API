@@ -175,16 +175,13 @@ class User
         $stmt->prepare($sql);
 
         // 消毒  strip_tags可不做 htmlspecialchars一定要做。 strip_tags：去掉 HTML 及 PHP 的標籤(html語法) ; htmlspecialchars，將特殊字元轉成 HTML 格式 防止http連接攻擊
-        $this->firstname = htmlspecialchars(strip_tags($this->firstname));
-        $this->lastname = htmlspecialchars(strip_tags($this->lastname));
-        $this->email = htmlspecialchars(strip_tags($this->email));
-        $this->password = htmlspecialchars(strip_tags($this->password));
-
-        // 密碼加密
-        $password_hash = password_hash($this->password, PASSWORD_BCRYPT);
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->car_name = htmlspecialchars(strip_tags($this->car_name));
+        $this->car_ip = htmlspecialchars(strip_tags($this->car_ip));
+        $this->car_port = htmlspecialchars(strip_tags($this->car_port));
 
         // 帶入參數
-        $stmt->bind_param('ssss', $this->firstname, $this->lastname, $this->email, $password_hash);
+        $stmt->bind_param('ssss', $this->id, $this->car_name, $this->car_ip, $this->car_port);
 
         // execute the query, also check if query was successful
         if ($stmt->execute()) {

@@ -48,7 +48,7 @@ if ($jwt) {
         echo json_encode(array(
             "code" => "41",
             "message" => "Access granted.",
-            "data" => $decoded->data->id
+            "data" => $decoded->data
         ));
     }
 
