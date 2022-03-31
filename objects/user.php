@@ -202,15 +202,18 @@ class User
         // 帶入參數
         $stmt->bind_param('s', $this->id);
 
+        $arr = array(); 
         // execute the query
         if ($stmt->execute()) {
             $result = $stmt->get_result();
-            while ($return_data = $result->fetch_assoc()) {
-                foreach ($return_data as $r) {
+            while ($row = $result->fetch_assoc()) {
+                foreach ($row as $r) {
                     echo "$r ";
                 }
+                array_push($arr,$row); 
                 echo "\n";
             }
+            echo json_encode($arr,JSON_UNESCAPED_UNICODE); 
             return true;
         }
         return false;
