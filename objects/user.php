@@ -208,10 +208,7 @@ class User
 
         // if email exists, assign values to object properties for easy access and use for php sessions
         if ($stmt->fetch()) {
-            $stmt->execute();
-            $result = $stmt->get_result();
-            echo $result->fetch_assoc();
-            return true;
+            echo $this->car_name;
         }
         return false;
     }
