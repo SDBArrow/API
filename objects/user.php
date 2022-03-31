@@ -17,8 +17,6 @@ class User
     public $car_name;
     public $car_ip;
     public $car_port;
-    public $return_data;
-    public $arr;
 
     // constructor
     public function __construct($db)
@@ -214,7 +212,7 @@ class User
                 array_push($arr, $row);
                 //echo "\n";
             }
-            return true;
+            return $arr;
         }
         return false;
     }

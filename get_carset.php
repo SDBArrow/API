@@ -55,7 +55,7 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if ($user->get_carset()) {
+        if ($return_data = $user->get_carset()) {
             // set response code
             http_response_code(200);
 
@@ -63,7 +63,7 @@ if ($jwt) {
             echo json_encode(array(
                 "code" => "71",
                 "message" => "儲存成功",
-                "data" => $user->$arr
+                "data" => $return_data
             ));
         }
     }
