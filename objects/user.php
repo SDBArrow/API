@@ -18,6 +18,7 @@ class User
     public $car_ip;
     public $car_port;
     public $return_data;
+    public $arr;
     
     // constructor
     public function __construct($db)
