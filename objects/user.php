@@ -206,6 +206,6 @@ class User
         $stmt->execute();
         $result = $stmt->get_result();
         $return_data = $result->fetch_assoc();
-        echo $return_data;
+        echo $return_data[0][0];
     }
 }
