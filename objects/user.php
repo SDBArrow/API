@@ -205,7 +205,11 @@ class User
         // execute the query
         $stmt->execute();
         $result = $stmt->get_result();
-        $return_data = $result->fetch_assoc();
-        echo $return_data[0][0];
+        while ($row = $result->fetch_assoc()) {
+            foreach ($row as $r) {
+                echo "$r ";
+            }
+            echo "\n";
+        }
     }
 }
