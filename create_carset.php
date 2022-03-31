@@ -61,7 +61,7 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
         echo "1";
-        if (!empty($user->id) && !empty($user->car_name) && !empty($user->car_ip) && !empty($user->car_port) && $user->create_cartset()) {
+        if ($user->create_cartset()) {
             echo "1";
             // set response code
             http_response_code(200);
