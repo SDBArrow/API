@@ -213,7 +213,7 @@ class User
                 array_push($arr,$row); 
                 //echo "\n";
             }
-            $return_data = json_encode($arr,JSON_UNESCAPED_UNICODE); 
+            echo $return_data = json_encode($arr,JSON_UNESCAPED_UNICODE); 
             return true;
         }
         return false;
