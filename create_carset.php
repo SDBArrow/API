@@ -59,7 +59,7 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if (!empty($user->name) && !empty($user->ip) && !empty($user->port) && $user->create_carset()) {
+        if (!empty($user->car_name) && !empty($user->car_ip) && !empty($user->car_port) && $user->create_carset()) {
 
             // set response code
             http_response_code(200);
