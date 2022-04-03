@@ -192,7 +192,7 @@ class User
     public function get_carset()
     {
         // query to check if email exists
-        $sql = "SELECT car_name, car_ip, car_port FROM car_set WHERE id_user=?";
+        $sql = "SELECT id_car_set car_name, car_ip, car_port FROM car_set WHERE id_user=?";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
