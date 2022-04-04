@@ -167,7 +167,7 @@ class User
     public function change_password()
     {
         $stmt = $this->conn->stmt_init();
-        $sql = "update car_set set password=?  where email=? ";
+        $sql = "UPDATE " . $this->table_name . " set password=? where email=? ";
         $stmt->prepare($sql);
         $this->password = htmlspecialchars(strip_tags($this->password));
         $password_hash = password_hash($this->password, PASSWORD_BCRYPT); // 加密密碼，並帶入值
