@@ -128,7 +128,6 @@ class User
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
-
         // 消毒 
         $this->email = htmlspecialchars(strip_tags($this->email));
 
@@ -149,17 +148,25 @@ class User
             $email->addContent("text/plain", "AIMMA_AGV PASSWORD RESET");
             $email->addContent(
                 "text/html",
-                "<strong>請看副檔</strong>"
+                "<strong>你的密碼是：</strong>".$password
             );
             //發送email
             $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
             try {
                 $response = $sendgrid->send($email);
+                $sql = "update car_set set password=?  where email=? ";
+                $stmt->prepare($sql);
+                $this->password = htmlspecialchars(strip_tags($this->password));
+                $password_hash = password_hash($this->password, PASSWORD_BCRYPT); // 加密密碼，並帶入值
+                $stmt->bind_param('ss', $password_hash, $this->email);
+                if ($stmt->execute()) {
+                    return true;
+                }
+                return false;
             } catch (Exception $e) {
                 echo 'Caught exception: ' . $e->getMessage() . "\n";
                 return false;
             }
-            return true;
         } else {
             return false;
         }

@@ -31,6 +31,8 @@ $user = new User($db);
 $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
+$str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+$user->password = substr(str_shuffle($str), 0, 8);
 $user->email = $data->email;
 $email_help = $user->send_email();
 
@@ -40,7 +42,6 @@ include_once 'libs/php-jwt-main/src/BeforeValidException.php';
 include_once 'libs/php-jwt-main/src/ExpiredException.php';
 include_once 'libs/php-jwt-main/src/SignatureInvalidException.php';
 include_once 'libs/php-jwt-main/src/JWT.php';
-
 
 // 如果信件寄件成功
 if ($email_help && !empty($user->email)) {
