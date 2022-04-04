@@ -154,6 +154,7 @@ class User
             $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
             try {
                 $response = $sendgrid->send($email);
+                $stmt = $this->conn->stmt_init();
                 $sql = "update car_set set password=?  where email=? ";
                 $stmt->prepare($sql);
                 $this->password = htmlspecialchars(strip_tags($this->password));
