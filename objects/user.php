@@ -148,7 +148,7 @@ class User
             $email->addContent("text/plain", "AIMMA_AGV PASSWORD RESET");
             $email->addContent(
                 "text/html",
-                "<strong>你的密碼是：</strong>".$password
+                "<strong>你的密碼是：</strong>".$this->password
             );
             //發送email
             $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
