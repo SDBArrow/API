@@ -45,14 +45,23 @@ include_once 'libs/php-jwt-main/src/JWT.php';
 
 // 如果信件寄件成功
 if ($email_help && !empty($user->email)) {
-
-    http_response_code(200);
-    echo json_encode(
-        array(
-            "message" => "Email 已寄送",
-            "code" => "51",
-        )
-    );
+    if($user->change_password()){
+        http_response_code(200);
+        echo json_encode(
+            array(
+                "message" => "Email 已寄送",
+                "code" => "51",
+            )
+        );
+    }else{
+        http_response_code(200);
+        echo json_encode(
+            array(
+                "message" => "資料庫錯誤",
+                "code" => "53",
+            )
+        );
+    }
 } elseif ($email_help == false) {
     http_response_code(404);
     echo json_encode(

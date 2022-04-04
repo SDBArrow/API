@@ -148,29 +148,36 @@ class User
             $email->addContent("text/plain", "AIMMA_AGV PASSWORD RESET");
             $email->addContent(
                 "text/html",
-                "<strong>你的密碼是：</strong>".$this->password
+                "<strong>你的密碼是：</strong>" . $this->password
             );
             //發送email
             $sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
             try {
                 $response = $sendgrid->send($email);
-                $stmt = $this->conn->stmt_init();
-                $sql = "update car_set set password=?  where email=? ";
-                $stmt->prepare($sql);
-                $this->password = htmlspecialchars(strip_tags($this->password));
-                $password_hash = password_hash($this->password, PASSWORD_BCRYPT); // 加密密碼，並帶入值
-                $stmt->bind_param('ss', $password_hash, $this->email);
-                if ($stmt->execute()) {
-                    return true;
-                }
-                return false;
             } catch (Exception $e) {
                 echo 'Caught exception: ' . $e->getMessage() . "\n";
                 return false;
             }
+            return true;
         } else {
             return false;
         }
+    }
+    // 寄送信件
+    public function change_password()
+    {
+        $stmt = $this->conn->stmt_init();
+        $sql = "update car_set set password=?  where email=? ";
+        $stmt->prepare($sql);
+        $this->password = htmlspecialchars(strip_tags($this->password));
+        $password_hash = password_hash($this->password, PASSWORD_BCRYPT); // 加密密碼，並帶入值
+        $stmt->bind_param('ss', $password_hash, $this->email);
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
     }
     // 創建車子資料
     public function create_carset()
@@ -236,7 +243,7 @@ class User
         $stmt->prepare($sql);
 
         // 帶入參數
-        $stmt->bind_param('ss', $this->id,$this->id_car_set);
+        $stmt->bind_param('ss', $this->id, $this->id_car_set);
         // execute the query
         if ($stmt->execute()) {
             return true;
