@@ -14,6 +14,7 @@ class User
     public $email;
     public $password;
 
+    public $id_car_set;
     public $car_name;
     public $car_ip;
     public $car_port;
@@ -214,6 +215,25 @@ class User
             }
             return $arr;
         }
+        return false;
+    }
+    // 刪除車子資料
+    public function delete_carset()
+    {
+        // query to check if email exists
+        $sql = "DELETE FROM car_set WHERE id_user=? and id_car_set=?";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 帶入參數
+        $stmt->bind_param('ss', $this->id,$this->id_car_set);
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        }
+
         return false;
     }
 }
