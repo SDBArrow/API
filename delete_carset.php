@@ -64,8 +64,8 @@ if ($jwt) {
 
             // show user details
             echo json_encode(array(
-                "code" => "61",
-                "message" => "儲存成功",
+                "code" => "63",
+                "message" => "刪除成功",
             ));
         }
     }
@@ -91,7 +91,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "code" => "62",
-        "message" => "儲存失敗"
+        "code" => "64",
+        "message" => "刪除失敗"
     ));
 }
