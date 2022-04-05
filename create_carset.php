@@ -54,7 +54,8 @@ $jwt = isset($data->jwt) ? $data->jwt : "";
 if ($jwt) {
     // if decode succeed, show user details
     try {
-        // decode jwt
+
+        // 解碼JWT
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
         $user->id = $decoded->data->id;
@@ -63,11 +64,17 @@ if ($jwt) {
 
             // set response code
             http_response_code(200);
-
-            // show user details
             echo json_encode(array(
                 "code" => "61",
                 "message" => "儲存成功",
+            ));
+        }else{
+
+            // set response code
+            http_response_code(200);
+            echo json_encode(array(
+                "code" => "62",
+                "message" => "儲存失敗",
             ));
         }
     }
@@ -81,7 +88,7 @@ if ($jwt) {
         // tell the user access denied  & show error message
         echo json_encode(array(
             "code" => "42",
-            "message" => "驗證失敗",
+            "message" => "登入憑證時效過期，請重新登入",
             "error" => $e->getMessage()
         ));
     }
@@ -93,7 +100,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "code" => "62",
-        "message" => "儲存失敗"
+        "code" => "43",
+        "message" => "登入驗證失敗，請重新登入"
     ));
 }
