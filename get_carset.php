@@ -65,6 +65,15 @@ if ($jwt) {
                 "message" => "儲存成功",
                 "data" => $return_data
             ));
+        }else{
+            http_response_code(404);
+
+            // show user details
+            echo json_encode(array(
+                "code" => "72",
+                "message" => "儲存失敗",
+                "data" => $return_data
+            ));
         }
     }
     // if decode fails, it means jwt is invalid
@@ -76,7 +85,7 @@ if ($jwt) {
         // tell the user access denied  & show error message
         echo json_encode(array(
             "code" => "42",
-            "message" => "Access denied.",
+            "message" => "登入憑證時效過期，請重新登入",
             "error" => $e->getMessage()
         ));
     }
@@ -88,7 +97,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "code" => "72",
-        "message" => "Access denied."
+        "code" => "43",
+        "message" => "登入驗證失敗，請重新登入"
     ));
 }

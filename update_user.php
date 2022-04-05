@@ -83,7 +83,7 @@ if ($jwt) {
             // response in json format
             echo json_encode(
                 array(
-                    "message" => "User was updated.",
+                    "message" => "資料已更新",
                     "code" => "31",
                     "jwt" => $jwt
                 )
@@ -97,7 +97,7 @@ if ($jwt) {
 
             // show error message
             echo json_encode(array(
-                "message" => "Unable to update user.",
+                "message" => "資料更新失敗",
                 "code" => "32",
             ));
         }
@@ -109,10 +109,10 @@ if ($jwt) {
         // set response code
         http_response_code(401);
 
-        // show error message
+        // tell the user access denied  & show error message
         echo json_encode(array(
-            "message" => "Access denied.",
-            "code" => "32",
+            "code" => "42",
+            "message" => "登入憑證時效過期，請重新登入",
             "error" => $e->getMessage()
         ));
     }
@@ -124,7 +124,7 @@ else {
 
     // tell the user access denied
     echo json_encode(array(
-        "message" => "Access denied.",
-        "code" => "32",
+        "code" => "43",
+        "message" => "登入驗證失敗，請重新登入"
     ));
 }

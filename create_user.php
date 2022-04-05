@@ -60,7 +60,7 @@ if ($email_exists == true) {
 } else {
 
     // set response code
-    http_response_code(400);
+    http_response_code(404);
 
     // display message: unable to create user
     echo json_encode(array(

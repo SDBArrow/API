@@ -71,7 +71,7 @@ if ($jwt) {
         }else{
 
             // set response code
-            http_response_code(200);
+            http_response_code(401);
             echo json_encode(array(
                 "code" => "62",
                 "message" => "儲存失敗",
