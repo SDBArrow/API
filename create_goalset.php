@@ -64,7 +64,7 @@ if ($jwt) {
         // 解碼JWT
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        if (!empty($user->id_car_set) && !empty($user->position_x) && !empty($user->position_y) && !empty($user->position_z) && $user->create_goalset()) {
+        if ($user->create_goalset()) {
 
             // set response code
             http_response_code(200);
