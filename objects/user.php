@@ -309,4 +309,23 @@ class User
         }
         return false;
     }
+    // 刪除車子資料
+    public function delete_goalset()
+    {
+        // query to check if email exists
+        $sql = "DELETE FROM goal_set WHERE id_goal_set=? and id_car_set=?";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 帶入參數
+        $stmt->bind_param('ss', $this->id_goal_set, $this->id_car_set);
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
 }
