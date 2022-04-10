@@ -43,6 +43,8 @@ $user = new User($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
+$user->id_car_set = $data->id_car_set;
+
 // get jwt
 $jwt = isset($data->jwt) ? $data->jwt : "";
 
@@ -53,15 +55,13 @@ if ($jwt) {
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        $user->id = $decoded->data->id;
-
-        if ($return_data = $user->get_carset()) {
+        if ($return_data = $user->get_goalset()) {
             // set response code
             http_response_code(200);
 
             // show user details
             echo json_encode(array(
-                "code" => "71",
+                "code" => "101",
                 "message" => "獲取成功",
                 "data" => $return_data
             ));
@@ -70,7 +70,7 @@ if ($jwt) {
 
             // show user details
             echo json_encode(array(
-                "code" => "72",
+                "code" => "102",
                 "message" => "獲取失敗",
                 "data" => $return_data
             ));

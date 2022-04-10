@@ -281,4 +281,32 @@ class User
         }
         return false;
     }
+    // 讀取goal資料
+    public function get_goalset()
+    {
+        // query to check if email exists
+        $sql = "SELECT goal_name, position_x, position_z, orientation_x, orientation_y, orientation_z, orientation_w FROM goal_set WHERE id_car_set=?";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 帶入參數
+        $stmt->bind_param('s', $this->id_car_set);
+        $arr = array();
+        // execute the query
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                /*
+                    foreach ($row as $r) {
+                        echo "$r ";
+                    }*/
+                array_push($arr, $row);
+                //echo "\n";
+            }
+            return $arr;
+        }
+        return false;
+    }
 }
