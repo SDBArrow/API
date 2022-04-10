@@ -19,6 +19,17 @@ class User
     public $car_ip;
     public $car_port;
 
+    public $id_goal_set;
+    public $goal_name;
+    public $position_x;
+    public $position_y;
+    public $position_z;
+    public $orientation_x;
+    public $orientation_y;
+    public $orientation_z;
+    public $orientation_w;
+
+
     // constructor
     public function __construct($db)
     {
