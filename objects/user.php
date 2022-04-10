@@ -285,7 +285,7 @@ class User
     public function get_goalset()
     {
         // query to check if email exists
-        $sql = "SELECT goal_name, position_x, position_z, orientation_x, orientation_y, orientation_z, orientation_w FROM goal_set WHERE id_car_set=?";
+        $sql = "SELECT id_goal_set, goal_name, position_x, position_z, orientation_x, orientation_y, orientation_z, orientation_w FROM goal_set WHERE id_car_set=?";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
