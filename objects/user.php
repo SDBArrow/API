@@ -266,7 +266,7 @@ class User
         public function create_goalset()
         {
             // insert query
-            $sql = "INSERT INTO ogal_set SET id_car_set=?, position_x=?, position_y=?, position_z=?, orientation_x=?, orientation_y=?, orientation_z=?, orientation_w=?";
+            $sql = "INSERT INTO goal_set SET id_car_set=?, position_x=?, position_y=?, position_z=?, orientation_x=?, orientation_y=?, orientation_z=?, orientation_w=?";
     
             // 初始化stat 防sql injection
             $stmt = $this->conn->stmt_init();
