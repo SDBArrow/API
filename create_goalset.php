@@ -64,17 +64,23 @@ if ($jwt) {
         // 解碼JWT
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        http_response_code(200);
-        echo json_encode(array(
-            "id_car_set" => $data->id_car_set,
-            "position_x" => $data->pose->position->x,
-            "position_y" => $data->pose->position->y,
-            "position_z" => $data->pose->position->z,
-            "orientation_x" => $data->pose->orientation->x,
-            "orientation_y" => $data->pose->orientation->y,
-            "orientation_z" => $data->pose->orientation->z,
-            "orientation_w" => $data->pose->orientation->w,
-        ));
+        if (!empty($user->id_car_set) && !empty($user->position_x) && !empty($user->position_y) && !empty($user->position_z) && $user->create_goalset()) {
+
+            // set response code
+            http_response_code(200);
+            echo json_encode(array(
+                "code" => "91",
+                "message" => "儲存成功",
+            ));
+        }else{
+
+            // set response code
+            http_response_code(401);
+            echo json_encode(array(
+                "code" => "92",
+                "message" => "儲存失敗",
+            ));
+        }
     }
 
     // if decode fails, it means jwt is invalid

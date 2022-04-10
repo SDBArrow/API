@@ -262,4 +262,23 @@ class User
 
         return false;
     }
+        // 創建goal資料
+        public function create_goalset()
+        {
+            // insert query
+            $sql = "INSERT INTO ogal_set SET id_car_set=?, position_x=?, position_y=?, position_z=?, orientation_x=?, orientation_y=?, orientation_z=?, orientation_w=?";
+    
+            // 初始化stat 防sql injection
+            $stmt = $this->conn->stmt_init();
+            $stmt->prepare($sql);
+    
+            // 帶入參數
+            $stmt->bind_param('ssssssss', $this->id_car_set, $this->position_x, $this->position_y, $this->position_z, $this->orientation_x, $this->orientation_y, $this->orientation_z, $this->orientation_w);
+    
+            // execute the query, also check if query was successful
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
+        }
 }
