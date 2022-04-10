@@ -43,6 +43,7 @@ $data = json_decode(file_get_contents("php://input"));
 
 // set product property values
 $user->id_car_set = $data->id_car_set;
+$user->goal_name = $data->goal_name;
 $user->position_x = $data->pose->position->x;
 $user->position_y = $data->pose->position->y;
 $user->position_z = $data->pose->position->z;
@@ -64,7 +65,7 @@ if ($jwt) {
         // 解碼JWT
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        if ($user->create_goalset()) {
+        if (!empty($user->goal_name) && $user->create_goalset()) {
 
             // set response code
             http_response_code(200);

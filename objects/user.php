@@ -266,14 +266,14 @@ class User
     public function create_goalset()
     {
         // insert query
-        $sql = "INSERT INTO goal_set SET id_car_set=?, position_x=?, position_y=?, position_z=?, orientation_x=?, orientation_y=?, orientation_z=?, orientation_w=?";
+        $sql = "INSERT INTO goal_set SET id_car_set=?, goal_name=?, position_x=?, position_y=?, position_z=?, orientation_x=?, orientation_y=?, orientation_z=?, orientation_w=?";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
-
+        $this->goal_name = htmlspecialchars(strip_tags($this->goal_name));
         // 帶入參數
-        $stmt->bind_param('ssssssss', $this->id_car_set, $this->position_x, $this->position_y, $this->position_z, $this->orientation_x, $this->orientation_y, $this->orientation_z, $this->orientation_w);
+        $stmt->bind_param('sssssssss', $this->id_car_set, $this->goal_name, $this->position_x, $this->position_y, $this->position_z, $this->orientation_x, $this->orientation_y, $this->orientation_z, $this->orientation_w);
 
         // execute the query, also check if query was successful
         if ($stmt->execute()) {
