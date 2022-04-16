@@ -61,7 +61,7 @@ if ($jwt) {
 
             // show user details
             echo json_encode(array(
-                "code" => "101",
+                "code" => "73",
                 "message" => "獲取成功",
                 "data" => $return_data
             ));
@@ -70,7 +70,7 @@ if ($jwt) {
 
             // show user details
             echo json_encode(array(
-                "code" => "102",
+                "code" => "74",
                 "message" => "獲取失敗",
                 "data" => $return_data
             ));

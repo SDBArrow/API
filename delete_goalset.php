@@ -63,7 +63,7 @@ if ($jwt) {
 
             // show user details
             echo json_encode(array(
-                "code" => "111",
+                "code" => "75",
                 "message" => "刪除成功",
             ));
         }else{
@@ -71,7 +71,7 @@ if ($jwt) {
 
             // show user details
             echo json_encode(array(
-                "code" => "112",
+                "code" => "76",
                 "message" => "刪除失敗",
             ));
         }

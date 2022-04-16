@@ -70,7 +70,7 @@ if ($jwt) {
             // set response code
             http_response_code(200);
             echo json_encode(array(
-                "code" => "91",
+                "code" => "71",
                 "message" => "儲存成功",
             ));
         }else{
@@ -78,7 +78,7 @@ if ($jwt) {
             // set response code
             http_response_code(401);
             echo json_encode(array(
-                "code" => "92",
+                "code" => "72",
                 "message" => "儲存失敗",
             ));
         }
