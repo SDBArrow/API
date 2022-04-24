@@ -328,4 +328,32 @@ class User
 
         return false;
     }
+    // 讀取會員資料
+    public function get_user()
+    {
+        // query to check if email exists
+        $sql = "SELECT id, firstname, lastname FROM " . $this->table_name . " WHERE id!=?";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 帶入參數
+        $stmt->bind_param('s', $this->id);
+        $arr = array();
+        // execute the query
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_assoc()) {
+                /*
+                    foreach ($row as $r) {
+                        echo "$r ";
+                    }*/
+                array_push($arr, $row);
+                //echo "\n";
+            }
+            return $arr;
+        }
+        return false;
+    }
 }
