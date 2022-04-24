@@ -341,6 +341,7 @@ class User
         // 帶入參數
         $stmt->bind_param('s', $this->id);
         $arr = array();
+        
         // execute the query
         if ($stmt->execute()) {
             $result = $stmt->get_result();
