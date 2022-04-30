@@ -43,8 +43,6 @@ class User
     // 創建新用戶
     function create()
     {
-
-        // insert query
         $sql = "INSERT INTO " . $this->table_name . " SET firstname=?, lastname=?, email=?, password=?";
 
         // 初始化stat 防sql injection
@@ -73,7 +71,6 @@ class User
     // 用email檢查用戶是否存在
     function emailExists()
     {
-        // query to check if email exists
         $sql = "SELECT id, firstname, lastname, password FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
 
         // 初始化stat 防sql injection
@@ -99,7 +96,6 @@ class User
     // 更新資料
     public function update()
     {
-
         $password_set = !empty($this->password);
         $userdata_set = !empty($this->firstname) && !empty($this->lastname);
 
@@ -137,7 +133,6 @@ class User
     // 寄送信件
     public function send_email()
     {
-        // query to check if email exists
         $sql = "SELECT firstname, lastname FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
 
         // 初始化stat 防sql injection
@@ -154,7 +149,7 @@ class User
         $stmt->bind_result($this->firstname, $this->lastname);
 
         if ($stmt->fetch()) {
-            require 'vendor/autoload.php'; // If you're using Composer (recommended)
+            require 'vendor/autoload.php';
             $send_email = getenv('email');
             $email = new \SendGrid\Mail\Mail();
             $email->setFrom($send_email, "AIMMA_AGV"); //寄件人資訊
@@ -197,7 +192,6 @@ class User
     // 創建車子資料
     public function create_carset()
     {
-        // insert query
         $sql = "INSERT INTO car_set SET id_user=?, car_name=?, car_ip=?, car_port=?";
 
         // 初始化stat 防sql injection
@@ -250,7 +244,6 @@ class User
     // 刪除車子資料
     public function delete_carset()
     {
-        // query to check if email exists
         $sql = "DELETE FROM car_set WHERE id_user=? and id_car_set=?";
 
         // 初始化stat 防sql injection
@@ -269,7 +262,6 @@ class User
     // 創建goal資料
     public function create_goalset()
     {
-        // insert query
         $sql = "INSERT INTO goal_set SET id_car_set=?, goal_name=?, position_x=?, position_y=?, position_z=?, orientation_x=?, orientation_y=?, orientation_z=?, orientation_w=?";
 
         // 初始化stat 防sql injection
@@ -288,7 +280,6 @@ class User
     // 讀取goal資料
     public function get_goalset()
     {
-        // query to check if email exists
         $sql = "SELECT id_goal_set, goal_name, position_x, position_y, position_z, orientation_x, orientation_y, orientation_z, orientation_w FROM goal_set WHERE id_car_set=?";
 
         // 初始化stat 防sql injection
@@ -298,6 +289,7 @@ class User
         // 帶入參數
         $stmt->bind_param('s', $this->id_car_set);
         $arr = array();
+
         // execute the query
         if ($stmt->execute()) {
             $result = $stmt->get_result();
@@ -316,7 +308,6 @@ class User
     // 刪除車子資料
     public function delete_goalset()
     {
-        // query to check if email exists
         $sql = "DELETE FROM goal_set WHERE id_goal_set=? and id_car_set=?";
 
         // 初始化stat 防sql injection
@@ -335,7 +326,6 @@ class User
     // 讀取會員資料
     public function get_user()
     {
-        // query to check if email exists
         $sql = "SELECT id, firstname, lastname, email, permissions FROM " . $this->table_name . " WHERE id!=?";
 
         // 初始化stat 防sql injection
@@ -364,7 +354,6 @@ class User
     // 讀取權限
     public function get_permissions()
     {
-        // query to check if email exists
         $sql = "SELECT permissions FROM " . $this->table_name . " WHERE id=?";
 
         // 初始化stat 防sql injection
@@ -378,7 +367,6 @@ class User
         $stmt->execute();
         $stmt->bind_result($this->permissions);
 
-        // if email exists, assign values to object properties for easy access and use for php sessions
         if ($stmt->fetch()) {
             if($this->permissions == 2){
                 return true;
