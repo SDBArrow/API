@@ -1,5 +1,8 @@
 <?php
 // 'user' object
+
+use SendGrid\Mail\Personalization;
+
 class User
 {
 
@@ -175,7 +178,7 @@ class User
             return false;
         }
     }
-    // 寄送信件
+    // 更改密碼
     public function change_password()
     {
         $stmt = $this->conn->stmt_init();
@@ -372,15 +375,16 @@ class User
         $stmt->bind_param('s', $this->id);
 
         // execute the query
-        if ($stmt->execute()) {
-            return $stmt->get_result();
-            /*
-            $this->permissions = $stmt->get_result();
-            if($this->permissions == "2" || $this->permissions == 2){
+        $stmt->execute();
+        $stmt->bind_result($this->permissions);
+
+        // if email exists, assign values to object properties for easy access and use for php sessions
+        if ($stmt->fetch()) {
+            if($this->permissions == 2){
                 return true;
             }else{
                 return false;
-            }*/
+            }
         }
         return false;
     }
