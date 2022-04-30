@@ -13,6 +13,7 @@ class User
     public $lastname;
     public $email;
     public $password;
+    public $permissions;
 
     public $id_car_set;
     public $car_name;
@@ -341,7 +342,7 @@ class User
         // 帶入參數
         $stmt->bind_param('s', $this->id);
         $arr = array();
-        
+
         // execute the query
         if ($stmt->execute()) {
             $result = $stmt->get_result();
@@ -354,6 +355,26 @@ class User
                 //echo "\n";
             }
             return $arr;
+        }
+        return false;
+    }
+    // 讀取權限
+    public function get_permissions()
+    {
+        // query to check if email exists
+        $sql = "SELECT permissions FROM " . $this->table_name . " WHERE id=?";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 帶入參數
+        $stmt->bind_param('s', $this->id);
+
+        // execute the query
+        if ($stmt->execute()) {
+            $this->permissions = $stmt->get_result();
+            return true;
         }
         return false;
     }

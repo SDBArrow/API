@@ -55,23 +55,34 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if ($return_data = $user->get_user()) {
-            // set response code
-            http_response_code(200);
+        if ($user->get_permissions()) {
+            if ($return_data = $user->get_user()) {
+                // set response code
+                http_response_code(200);
 
-            // show user details
-            echo json_encode(array(
-                "code" => "81",
-                "message" => "獲取成功",
-                "data" => $return_data
-            ));
-        }else{
+                // show user details
+                echo json_encode(array(
+                    "code" => "81",
+                    "message" => "獲取成功",
+                    "data" => $return_data
+                ));
+            } else {
+                http_response_code(404);
+
+                // show user details
+                echo json_encode(array(
+                    "code" => "82",
+                    "message" => "獲取失敗",
+                    "data" => $return_data
+                ));
+            }
+        } else {
             http_response_code(404);
 
             // show user details
             echo json_encode(array(
-                "code" => "82",
-                "message" => "獲取失敗",
+                "code" => "85",
+                "message" => "權限不夠",
                 "data" => $return_data
             ));
         }
