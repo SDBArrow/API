@@ -85,7 +85,7 @@ class User
 
         // execute the query
         $stmt->execute();
-        $stmt->bind_result($this->id, $this->firstname, $this->lastname, $this->password,  $this->permissions);
+        $stmt->bind_result($this->id, $this->firstname, $this->lastname, $this->password, $this->permissions);
 
         // if email exists, assign values to object properties for easy access and use for php sessions
         if ($stmt->fetch()) {
