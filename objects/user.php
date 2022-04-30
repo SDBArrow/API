@@ -374,7 +374,11 @@ class User
         // execute the query
         if ($stmt->execute()) {
             $this->permissions = $stmt->get_result();
-            return true;
+            if($this->permissions == 2){
+                return true;
+            }else{
+                return false;
+            }
         }
         return false;
     }
