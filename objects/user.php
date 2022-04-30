@@ -333,7 +333,7 @@ class User
     public function get_user()
     {
         // query to check if email exists
-        $sql = "SELECT id, firstname, lastname FROM " . $this->table_name . " WHERE id!=?";
+        $sql = "SELECT id, firstname, lastname, email, permissions FROM " . $this->table_name . " WHERE id!=?";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
