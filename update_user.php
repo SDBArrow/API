@@ -72,7 +72,8 @@ if ($jwt) {
                     "id" => $user->id,
                     "firstname" => $user->firstname,
                     "lastname" => $user->lastname,
-                    "email" => $user->email
+                    "email" => $user->email,
+                    "permissions" => $user->permissions
                 )
             );
             $jwt = JWT::encode($token, $key, 'HS256');
