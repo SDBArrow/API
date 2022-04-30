@@ -71,7 +71,7 @@ class User
     // 用email檢查用戶是否存在
     function emailExists()
     {
-        $sql = "SELECT id, firstname, lastname, password FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
+        $sql = "SELECT id, firstname, lastname, password, permissions FROM " . $this->table_name . " WHERE email=? LIMIT 0,1";
 
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
@@ -85,7 +85,7 @@ class User
 
         // execute the query
         $stmt->execute();
-        $stmt->bind_result($this->id, $this->firstname, $this->lastname, $this->password);
+        $stmt->bind_result($this->id, $this->firstname, $this->lastname, $this->password,  $this->permissions);
 
         // if email exists, assign values to object properties for easy access and use for php sessions
         if ($stmt->fetch()) {
