@@ -71,7 +71,7 @@ if ($jwt) {
             // show user details
             echo json_encode(array(
                 "code" => "64",
-                "message" => "獲取失敗",
+                "message" => "無連線資料，或其他連接失敗",
                 "data" => $return_data
             ));
         }
