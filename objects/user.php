@@ -93,7 +93,7 @@ class User
         }
         return false;
     }
-    // 更新資料
+    // 更新資料、或密碼
     public function update()
     {
         $password_set = !empty($this->password);
@@ -222,7 +222,7 @@ class User
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
-        
+
         $arr = array();
         // execute the query
         if ($stmt->execute()) {
@@ -366,11 +366,25 @@ class User
         $stmt->bind_result($this->permissions);
 
         if ($stmt->fetch()) {
-            if($this->permissions == 2){
+            if ($this->permissions == 2) {
                 return true;
-            }else{
+            } else {
                 return false;
             }
+        }
+        return false;
+    }
+    // 讀取權限
+    public function chagne_permissions()
+    {
+        $stmt = $this->conn->stmt_init();
+        $sql = "UPDATE " . $this->table_name . " set permissions=? where id=? ";
+        $stmt->prepare($sql);
+        $this->id = htmlspecialchars(strip_tags($this->id));
+        $stmt->bind_param('ss', $this->permissions, $this->id);
+        // execute the query
+        if ($stmt->execute()) {
+            return true;
         }
         return false;
     }
