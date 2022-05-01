@@ -374,7 +374,7 @@ class User
         }
         return false;
     }
-    // 讀取權限
+    // 更改權限
     public function chagne_permissions()
     {
         $stmt = $this->conn->stmt_init();
