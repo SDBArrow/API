@@ -57,16 +57,24 @@ if ($jwt) {
         if ($user->get_permissions()) {
             $user->id = $data->id;
             $user->permissions = $data->permissions;
-            if ($user->chagne_permissions()) {
-                http_response_code(200);
-                echo json_encode(
-                    array(
-                        "message" => "權限已更新",
-                        "code" => "83",
-                    )
-                );
-            }
-            else {
+            if($user->permissions < 3 && $user->permissions > 0){
+                if ($user->chagne_permissions()) {
+                    http_response_code(200);
+                    echo json_encode(
+                        array(
+                            "message" => "權限已更新",
+                            "code" => "83",
+                        )
+                    );
+                }
+                else {
+                    http_response_code(401);
+                    echo json_encode(array(
+                        "message" => "權限更新失敗",
+                        "code" => "84",
+                    ));
+                }
+            }else{
                 http_response_code(401);
                 echo json_encode(array(
                     "message" => "權限更新失敗",
