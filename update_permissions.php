@@ -70,14 +70,14 @@ if ($jwt) {
                 else {
                     http_response_code(401);
                     echo json_encode(array(
-                        "message" => "權限更新失敗，權限等級不夠，或已達上下限",
+                        "message" => "權限更新失敗",
                         "code" => "84",
                     ));
                 }
             }else{
                 http_response_code(401);
                 echo json_encode(array(
-                    "message" => "權限更新失敗",
+                    "message" => "權限更新失敗，權限等級不夠，或已達上下限",
                     "code" => "84",
                 ));
             }
