@@ -381,6 +381,7 @@ class User
         $sql = "UPDATE " . $this->table_name . " set permissions=? where id=? ";
         $stmt->prepare($sql);
         $this->id = htmlspecialchars(strip_tags($this->id));
+        $this->permissions = htmlspecialchars(strip_tags($this->permissions));
         $stmt->bind_param('ss', $this->permissions, $this->id);
         // execute the query
         if ($stmt->execute()) {
