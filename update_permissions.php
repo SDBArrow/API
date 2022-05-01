@@ -69,7 +69,7 @@ if ($jwt) {
             else {
                 http_response_code(401);
                 echo json_encode(array(
-                    "message" => "資料更新失敗",
+                    "message" => "權限更新失敗",
                     "code" => "84",
                 ));
             }
