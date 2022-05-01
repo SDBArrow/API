@@ -57,7 +57,7 @@ if ($jwt) {
         if ($user->get_permissions()) {
             $user->id = $data->id;
             $user->permissions = $data->permissions;
-            if($user->permissions < 3 && $user->permissions > 0){
+            if($user->permissions < 3 && $user->permissions >= 0){
                 if ($user->chagne_permissions()) {
                     http_response_code(200);
                     echo json_encode(
