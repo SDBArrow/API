@@ -57,23 +57,32 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if (!empty($user->id_car_set) && $user->delete_carset()) {
+        if ($user->check_permissions1()) {
+            if (!empty($user->id_car_set) && $user->delete_carset()) {
 
-            // set response code
-            http_response_code(200);
+                // set response code
+                http_response_code(200);
 
-            // show user details
-            echo json_encode(array(
-                "code" => "65",
-                "message" => "刪除成功",
-            ));
-        }else{
+                // show user details
+                echo json_encode(array(
+                    "code" => "65",
+                    "message" => "刪除成功",
+                ));
+            } else {
+                http_response_code(404);
+
+                // show user details
+                echo json_encode(array(
+                    "code" => "66",
+                    "message" => "刪除失敗",
+                ));
+            }
+        } else {
             http_response_code(404);
-
-            // show user details
             echo json_encode(array(
-                "code" => "66",
-                "message" => "刪除失敗",
+                "code" => "85",
+                "message" => "權限不夠",
+                "data" => $return_data
             ));
         }
     }

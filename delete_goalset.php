@@ -55,24 +55,32 @@ if ($jwt) {
     try {
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        if ($user->check_permissions1()) {
+            if (!empty($user->id_goal_set) && $user->delete_goalset()) {
 
-        if (!empty($user->id_goal_set) && $user->delete_goalset()) {
+                // set response code
+                http_response_code(200);
 
-            // set response code
-            http_response_code(200);
+                // show user details
+                echo json_encode(array(
+                    "code" => "75",
+                    "message" => "刪除成功",
+                ));
+            } else {
+                http_response_code(404);
 
-            // show user details
-            echo json_encode(array(
-                "code" => "75",
-                "message" => "刪除成功",
-            ));
-        }else{
+                // show user details
+                echo json_encode(array(
+                    "code" => "76",
+                    "message" => "刪除失敗",
+                ));
+            }
+        } else {
             http_response_code(404);
-
-            // show user details
             echo json_encode(array(
-                "code" => "76",
-                "message" => "刪除失敗",
+                "code" => "85",
+                "message" => "權限不夠",
+                "data" => $return_data
             ));
         }
     }

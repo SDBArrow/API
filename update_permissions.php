@@ -54,7 +54,7 @@ if ($jwt) {
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
         $user->id = $decoded->data->id;
         
-        if ($user->get_permissions()) {
+        if ($user->check_permissions2()) {
             if($data->permissions < $user->permissions && $data->permissions >= 0){
                 $user->id = $data->id;
                 $user->permissions = $data->permissions;

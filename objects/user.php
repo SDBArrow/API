@@ -325,7 +325,7 @@ class User
     public function get_user()
     {
         $sql = "SELECT id, firstname, lastname, email, permissions FROM " . $this->table_name . " WHERE permissions<?";
-        
+
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
@@ -349,8 +349,8 @@ class User
         }
         return false;
     }
-    // 讀取權限
-    public function get_permissions()
+    // 確認是否為權限2以上
+    public function check_permissions2()
     {
         $sql = "SELECT permissions FROM " . $this->table_name . " WHERE id=?";
 
@@ -367,6 +367,31 @@ class User
 
         if ($stmt->fetch()) {
             if ($this->permissions == 2 || $this->permissions == 3) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+    // 確認是否為權限1以上
+    public function check_permissions1()
+    {
+        $sql = "SELECT permissions FROM " . $this->table_name . " WHERE id=?";
+
+        // 初始化stat 防sql injection
+        $stmt = $this->conn->stmt_init();
+        $stmt->prepare($sql);
+
+        // 帶入參數
+        $stmt->bind_param('s', $this->id);
+
+        // execute the query
+        $stmt->execute();
+        $stmt->bind_result($this->permissions);
+
+        if ($stmt->fetch()) {
+            if ($this->permissions == 1 || $this->permissions == 2 || $this->permissions == 3) {
                 return true;
             } else {
                 return false;

@@ -65,21 +65,30 @@ if ($jwt) {
         // 解碼JWT
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        if (!empty($user->goal_name) && $user->create_goalset()) {
+        if ($user->check_permissions1()) {
+            if (!empty($user->goal_name) && $user->create_goalset()) {
 
-            // set response code
-            http_response_code(200);
-            echo json_encode(array(
-                "code" => "71",
-                "message" => "儲存成功",
-            ));
-        }else{
+                // set response code
+                http_response_code(200);
+                echo json_encode(array(
+                    "code" => "71",
+                    "message" => "儲存成功",
+                ));
+            } else {
 
-            // set response code
-            http_response_code(401);
+                // set response code
+                http_response_code(401);
+                echo json_encode(array(
+                    "code" => "72",
+                    "message" => "儲存失敗",
+                ));
+            }
+        } else {
+            http_response_code(404);
             echo json_encode(array(
-                "code" => "72",
-                "message" => "儲存失敗",
+                "code" => "85",
+                "message" => "權限不夠",
+                "data" => $return_data
             ));
         }
     }

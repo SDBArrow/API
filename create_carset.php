@@ -60,21 +60,30 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if (!empty($user->car_name) && !empty($user->car_ip) && !empty($user->car_port) && $user->create_carset()) {
+        if ($user->check_permissions1()) {
+            if (!empty($user->car_name) && !empty($user->car_ip) && !empty($user->car_port) && $user->create_carset()) {
 
-            // set response code
-            http_response_code(200);
-            echo json_encode(array(
-                "code" => "61",
-                "message" => "儲存成功",
-            ));
-        }else{
+                // set response code
+                http_response_code(200);
+                echo json_encode(array(
+                    "code" => "61",
+                    "message" => "儲存成功",
+                ));
+            } else {
 
-            // set response code
-            http_response_code(401);
+                // set response code
+                http_response_code(401);
+                echo json_encode(array(
+                    "code" => "62",
+                    "message" => "儲存失敗",
+                ));
+            }
+        } else {
+            http_response_code(404);
             echo json_encode(array(
-                "code" => "62",
-                "message" => "儲存失敗",
+                "code" => "85",
+                "message" => "權限不夠",
+                "data" => $return_data
             ));
         }
     }
