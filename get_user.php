@@ -55,7 +55,7 @@ if ($jwt) {
 
         $user->id = $decoded->data->id;
 
-        if ($user->get_permissions()) {
+        if ($user->check_permissions2()) {
             if ($return_data = $user->get_user()) {
                 // set response code
                 http_response_code(200);
