@@ -42,7 +42,6 @@ $user = new User($db);
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
-$user->permissions = $data->permissions;
 $jwt = isset($data->jwt) ? $data->jwt : "";
 
 // if jwt is not empty
@@ -53,34 +52,32 @@ if ($jwt) {
 
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
-
-        // set user property values
         $user->id = $decoded->data->id;
-
-        // update the user record
-        if ($user->chagne_permissions()) {
-
-            // set response code
-            http_response_code(200);
-
-            // response in json format
-            echo json_encode(
-                array(
-                    "message" => "權限已更新",
-                    "code" => "83",
-                )
-            );
-        }
-
-        // message if unable to update user
-        else {
-            // set response code
-            http_response_code(401);
-
-            // show error message
+        
+        if ($user->get_permissions()) {
+            if ($user->chagne_permissions()) {
+                $user->permissions = $data->permissions;
+                http_response_code(200);
+                echo json_encode(
+                    array(
+                        "message" => "權限已更新",
+                        "code" => "83",
+                    )
+                );
+            }
+            else {
+                http_response_code(401);
+                echo json_encode(array(
+                    "message" => "資料更新失敗",
+                    "code" => "84",
+                ));
+            }
+        } else {
+            http_response_code(404);
             echo json_encode(array(
-                "message" => "資料更新失敗",
-                "code" => "84",
+                "code" => "85",
+                "message" => "權限不夠",
+                "data" => $return_data
             ));
         }
     }
