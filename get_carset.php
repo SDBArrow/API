@@ -53,8 +53,6 @@ if ($jwt) {
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
 
-        $user->id = $decoded->data->id;
-
         if ($return_data = $user->get_carset()) {
             // set response code
             http_response_code(200);

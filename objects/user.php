@@ -222,9 +222,7 @@ class User
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
-
-        // 帶入參數
-        $stmt->bind_param('s', $this->id);
+        
         $arr = array();
         // execute the query
         if ($stmt->execute()) {
