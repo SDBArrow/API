@@ -324,14 +324,14 @@ class User
     // 讀取會員資料
     public function get_user()
     {
-        $sql = "SELECT id, firstname, lastname, email, permissions FROM " . $this->table_name . " WHERE id!=?";
-
+        $sql = "SELECT id, firstname, lastname, email, permissions FROM " . $this->table_name . " WHERE permissions<?";
+        
         // 初始化stat 防sql injection
         $stmt = $this->conn->stmt_init();
         $stmt->prepare($sql);
 
         // 帶入參數
-        $stmt->bind_param('s', $this->id);
+        $stmt->bind_param('s', $this->permissions);
         $arr = array();
 
         // execute the query
@@ -366,7 +366,7 @@ class User
         $stmt->bind_result($this->permissions);
 
         if ($stmt->fetch()) {
-            if ($this->permissions == 2) {
+            if ($this->permissions == 2 || $this->permissions == 3) {
                 return true;
             } else {
                 return false;
