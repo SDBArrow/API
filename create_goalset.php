@@ -81,7 +81,7 @@ if ($jwt) {
                 http_response_code(401);
                 echo json_encode(array(
                     "code" => "72",
-                    "message" => "儲存失敗",
+                    "message" => "儲存失敗、請輸入座標名稱",
                 ));
             }
         } else {
