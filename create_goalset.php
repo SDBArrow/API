@@ -64,6 +64,7 @@ if ($jwt) {
 
         // 解碼JWT
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+        $user->id = $decoded->data->id;
 
         if ($user->check_permissions1()) {
             if (!empty($user->goal_name) && $user->create_goalset()) {
