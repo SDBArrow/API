@@ -55,6 +55,9 @@ if ($jwt) {
     try {
         // decode jwt
         $decoded = JWT::decode($jwt, new Key($key, 'HS256'));
+
+        $user->id = $decoded->data->id;
+        
         if ($user->check_permissions1()) {
             if (!empty($user->id_goal_set) && $user->delete_goalset()) {
 
